@@ -21,27 +21,19 @@ const BusinessSchema = new Schema({
         required: true
     },
     state: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            rel: State
-        }]
+        type: String,
+        required: true
     },
     city: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            rel: City
-        }]
+        type: String,
+        required: true
     },
     businessLine: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            rel: BusinessLine
-        }]
+        type: String,
+        required: true
     },
     businessSector: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            rel: BusinessSector
-        }]
+        type: String,
+        required: true
     }
 });

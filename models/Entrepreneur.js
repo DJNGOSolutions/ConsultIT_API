@@ -31,16 +31,12 @@ const EntrepreneurSchema = new Schema({
         required: true
     },
     state: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            rel: State
-        }]
+        type: String,
+        required: true
     },
     city: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            rel: City
-        }]
+        type: String,
+        required: true
     },
     businesses: {
         type: [{

@@ -31,9 +31,7 @@ const ConsultantSchema = new Schema({
         default: 0.00
     },
     consultantType: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            rel: ConsultantType
-        }]
+        type: String,
+        required: true
     }
 });
