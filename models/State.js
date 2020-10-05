@@ -8,3 +8,5 @@ const StateSchema = new Schema({
         unique: true
     }
 });
+
+module.exports = mongoose.model("State", StateSchema);

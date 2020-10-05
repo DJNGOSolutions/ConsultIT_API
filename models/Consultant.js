@@ -35,3 +35,5 @@ const ConsultantSchema = new Schema({
         required: true
     }
 });
+
+module.exports = mongoose.model("Consultant", ConsultantSchema);

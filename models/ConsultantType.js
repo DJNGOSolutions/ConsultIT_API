@@ -8,3 +8,5 @@ const ConsultantTypeSchema = new Schema({
         unique: true
     }
 });
+
+module.exports = mongoose.model("ConsultantType", ConsultantTypeSchema);

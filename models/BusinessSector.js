@@ -8,3 +8,5 @@ const BusinessSectorSchema = new Schema({
         require: true
     }
 });
+
+module.exports = mongoose.model("BusinessSector", BusinessSectorSchema);

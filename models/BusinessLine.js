@@ -8,3 +8,5 @@ const BusinessLineSchema = new Schema({
         unique: true
     }
 });
+
+module.exports = mongoose.model("BusinessLine", BusinessLineSchema);

@@ -37,3 +37,5 @@ const BusinessSchema = new Schema({
         required: true
     }
 });
+
+module.exports = mongoose.model("Business", BusinessSchema);

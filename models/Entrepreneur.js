@@ -45,3 +45,5 @@ const EntrepreneurSchema = new Schema({
         }]
     }
 });
+
+module.exports = mongoose.model("Entrepreneur", EntrepreneurSchema);
