@@ -1,4 +1,4 @@
-const crypto = require('crypto')
+const Crypto = require('crypto')
 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
@@ -16,7 +16,6 @@ const UserSchema = new Schema({
     },
     hashedPassword: {
         type: String,
-        default: "",
         required: true
     },
 });
@@ -24,12 +23,12 @@ const UserSchema = new Schema({
 UserSchema.
     virtual("password")
     .set(function(password){
-        this.hashedPassword = Crypto.createHmac("sha256", password).diggest("hex");
+        this.hashedPassword = Crypto.createHmac("sha256", password).digest("hex");
     });
 
 UserSchema.methods = {
     comparePassword: function(password) {
-        return (Crypto.createHmac("sha256", password).diggest("hex") === this.hashedPassword)
+        return (Crypto.createHmac("sha256", password).digest("hex") === this.hashedPassword)
     }
 }
 
