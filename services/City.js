@@ -9,9 +9,8 @@ CityService.createNewCity = async ({ name }) => {
             message: "City was stored correctly."
         }
     }
-    console.log('1');
+
     if (!name) {
-        console.log('2');
         serviceResponse = {
             success: false,
             content: {
@@ -23,11 +22,8 @@ CityService.createNewCity = async ({ name }) => {
     }
 
     try{
-        console.log('3');
         const newCity = new CityModel({name});
-        console.log('4');
         const savedCity = await newCity.save();
-        console.log('5');
         if (!savedCity) {
             serviceResponse = {
                 success: false,
@@ -35,12 +31,13 @@ CityService.createNewCity = async ({ name }) => {
                     error: "City could not be registrated."
                 }
             }
+            
+            return serviceResponse;
         }
 
         return serviceResponse;
 
     } catch(error) {
-        console.log(error);
         throw new Error("Internal Server Error.")
     }
 }

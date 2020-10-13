@@ -1,4 +1,3 @@
-const { log } = require('debug');
 const CityService = require('../../services/City');
 
 const CityController = {};
