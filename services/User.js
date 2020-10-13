@@ -1,4 +1,3 @@
-const User = require('../models/User');
 const UserModel = require('../models/User')
 
 const emailRegex = new RegExp("^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$");
