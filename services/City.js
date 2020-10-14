@@ -1,3 +1,4 @@
+const City = require('../models/City');
 const CityModel = require('../models/City');
 
 const CityService = {};
@@ -39,6 +40,34 @@ CityService.createNewCity = async ({ name }) => {
 
     } catch(error) {
         throw new Error("Internal Server Error.")
+    }
+}
+
+CityService.findAll = async (page, limit) => {
+    let serviceResponse = {
+        success: true,
+        content: {}
+    }
+
+    try {
+        const Cities = await CityModel.find({}, undefined, {
+            skip: page * limit,
+            limit: limit,
+            sort: [{
+                updatedAt: -1
+            }]
+        }).exec();
+
+        serviceResponse.content = {
+            Cities,
+            count: Cities.length,
+            page,
+            limit
+        };
+
+        return serviceResponse;
+    } catch(error) {
+        throw new error("Internal Server Error.");
     }
 }
 
