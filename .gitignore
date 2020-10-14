@@ -3,3 +3,7 @@
 
 #File added just to see clearly the folders structure in VS Code
 /controllers/api.js
+
+#Added the node_modules bc best practices
+
+/node_modules
