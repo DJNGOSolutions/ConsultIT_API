@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t consultit .
+docker build --no-cache -t consultit .

@@ -21,7 +21,7 @@ const connect = async() => {
     } catch(error) {
         console.log("Error in DB connection");
         console.log(dburi);
-        process.exit(1);
+        //process.exit(1);
     }
 }
 
