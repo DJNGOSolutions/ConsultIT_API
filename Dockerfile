@@ -1,10 +1,6 @@
 FROM node:12
 
-LABEL author="Nelson Castro"
-LABEL mail="00043516@uca.edu.sv"
-
-#RUN apt update -y
-#RUN apt install -y git
+LABEL author="Nelson Castro" mail="00043516@uca.edu.sv"
 
 WORKDIR /usr/src/app
 
