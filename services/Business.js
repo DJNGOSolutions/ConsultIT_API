@@ -29,7 +29,6 @@ BusinessService.verifyCreateFields = ({ legalName, comercialName, email, phoneNu
                 error: "A required field was not provided"
             }
         }
-        return serviceResponse;
     }
 
     return serviceResponse;
@@ -113,9 +112,9 @@ BusinessService.deleteOneByID = async (_id) => {
                 }
             }
         }
-        return serviceResponse
+        return serviceResponse;
     }catch(error){
-        console.log("An error occurred" + error);
+        console.log("An error occurred: " + error);
         throw new Error("Internal Server Error");
     }
 }
