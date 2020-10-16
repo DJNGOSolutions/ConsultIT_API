@@ -1,9 +1,9 @@
-const BusinessSectorModel = require("../models/BusinessSector");
+const ConsultantTypeModel = require("../models/ConsultantType");
 const debug = require("debug")("log");
 
-const BusinessSector = {};
+const ConsultantType = {};
 
-BusinessSectorService.verifyCreateFields = ({ name }) => {
+ConsultantTypeService.verifyCreateFields = ({ name }) => {
     let serviceResponse = {
         success: true,
         content: {
@@ -23,24 +23,24 @@ BusinessSectorService.verifyCreateFields = ({ name }) => {
     return serviceResponse;
 };
 
-BusinessSectorService.createNewBusinessSector = async ({ name }) => {
+ConsultantTypeService.createNewConsultantType = async ({ name }) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "A new Business Sector has been registered"
+            message: "A new Consultant Type has been registered"
         }
     }
 
     try{
-        const newBusinessSector = new BusinessSectorModel({name});
-        console.log("New Business Sector Model: " + newBusinessSector );
+        const newConsultantType = new ConsultantTypeModel({name});
+        console.log("New Consultant Type Model: " + newConsultantType );
         
-        const savedBusinessSector = await newBusinessSector.save();
-        if(!savedBusinessSector){
+        const savedConsultantType = await newConsultantType.save();
+        if(!savedConsultantType){
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Business sector could not be registered"
+                    error: "Consultant Type not be registered"
                 }
             }
         }
@@ -53,25 +53,25 @@ BusinessSectorService.createNewBusinessSector = async ({ name }) => {
 
 };
 
-BusinessSectorService.findAll = async () => {
+ConsultantTypeService.findAll = async () => {
     let serviceResponse = {
         success: true,
         content: {}
     }
     
     try {
-        const businessessectors = await BusinessSectorModel.find();
-        if(!businessessectors){
+        const consultantstypes = await ConsultantTypeModel.find();
+        if(!consultantstypes){
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Could not find any business sectors"
+                    error: "Could not find any Consultant Type"
                 }
             }
         } else {
             serviceResponse.content = {
-                businessessectors,
-                count: businessessectors.length
+                consultantstypes,
+                count: consultantstypes.length
             }
         }
         return serviceResponse;
@@ -81,30 +81,30 @@ BusinessSectorService.findAll = async () => {
     }
 }
 
-BusinessSectorService.deleteOneByID = async (_id) => {
+ConsultantTypeService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "Business sector deleted!"
+            message: "Consultant type deleted!"
         }
     }
     
     try{
-        const businessSectorDeleted = await BusinessSectorModel.findByIdAndDelete(_id).exec(); 
-        if(!businessSectorDeleted) {
+        const ConsultantTypeDeleted = await ConsultantTypeModel.findByIdAndDelete(_id).exec(); 
+        if(!ConsultantTypeDeleted) {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Business sector could not be deleted"
+                    error: "Consultant type could not be deleted"
                 }
             }
         }
 
         return serviceResponse;
     } catch (error) {
-        console.log("An eorro occurred: " + error);
+        console.log("An error occurred: " + error);
         throw new Error("Internal Server Error");
     }
 }
 
-module.exports = BusinessSectorService;
+module.exports = ConsultantTypeService;
