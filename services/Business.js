@@ -98,7 +98,7 @@ BusinessService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "Post deleted!"
+            message: "Business deleted!"
         }
     }
     
@@ -108,7 +108,7 @@ BusinessService.deleteOneByID = async (_id) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Post could not be deleted"
+                    error: "Business could not be deleted"
                 }
             }
         }
