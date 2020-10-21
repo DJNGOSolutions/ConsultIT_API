@@ -11,7 +11,7 @@ EntrepreneurService.verifyCreateFields = ({ user, firstName, lastName, photo, bi
         }
     }
     
-    if(!user || !firstName || !lastName || !photo || !birthdate || !phoneNumber || !postalAddress || !state || !city || !businesses){
+    if(!user || !firstName || !lastName || !photo || !birthdate || !phoneNumber || !postalAddress || !state || !city){
         let serviceResponse = {
             success: false,
             content: {
