@@ -3,6 +3,7 @@ const router = express.Router();
 
 const CityController = require('../../controllers/api/City');
 
-router.post('/newcity', CityController.addNewCity);
+router.post('/new', CityController.addNewCity);
+router.get('/all', CityController.findAllCities);
 
 module.exports = router;
