@@ -18,7 +18,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    type: Number,
+    type: String
 });
 
 UserSchema.

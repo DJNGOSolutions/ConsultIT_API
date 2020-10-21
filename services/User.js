@@ -1,17 +1,20 @@
-const UserModel = require('../models/User')
+const UserModel = require('../models/User');
+
+const ConsultantService = require('./Consultant');
+const EntrepreneurService = require('./Entrepreneur');
 
 const emailRegex = new RegExp("^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$");
 
 const UserService = {};
 
 //Sing up service
-UserService.verifyRegistrationFields = ({ username, email, password }) => {
+UserService.verifyRegistrationFields = ({ username, email, password, type,  firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city, referencePrice, historicAveragePrice, averageRating, consultantType}) => {
     let serviceResponse = {
         success: true,
         content: {}
     }
     
-    if(!username || !email || !password){
+    if(!username || !email || !password || !type){
         serviceResponse = {
             success: false,
             content: {
@@ -31,6 +34,10 @@ UserService.verifyRegistrationFields = ({ username, email, password }) => {
         }
 
         return serviceResponse;
+    }
+    
+    switch (type) {
+        case 
     }
 
     return serviceResponse;
@@ -102,7 +109,6 @@ UserService.register = async ({ username, email, password }) => {
         throw new Error("Internal Server Error")
     }
 }
-
 //Sign in service
 UserService.verifyLoginFields = ({ identifier, password }) => {
     let serviceResponse = {
