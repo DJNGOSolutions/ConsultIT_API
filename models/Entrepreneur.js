@@ -4,10 +4,8 @@ const Schema = mongoose.Schema;
 
 const EntrepreneurSchema = new Schema({
     user:{
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            rel: User
-        }]
+        type: mongoose.Schema.Types.ObjectId,
+        rel: User
     },
     firstName: {
         type: String,
@@ -17,7 +15,10 @@ const EntrepreneurSchema = new Schema({
         type: String,
         required: true,
     },
-    photo: String,
+    photo: {
+        type: String,
+        default: ""
+    },
     birthdate: {
         type: Date,
         required: true,
@@ -38,12 +39,10 @@ const EntrepreneurSchema = new Schema({
         type: String,
         required: true
     },
-    businesses: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            rel: Business
-        }]
-    }
+    businesses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        rel: Business
+    }]
 });
 
 module.exports = mongoose.model("Entrepreneur", EntrepreneurSchema);

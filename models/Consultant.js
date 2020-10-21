@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
+const User = require('./User');
 const Schema = mongoose.Schema;
 
 const ConsultantSchema = new Schema({
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        rel: User
+    }, 
     firstName: {
         type: String,
         required: true
@@ -9,6 +14,10 @@ const ConsultantSchema = new Schema({
     lastName: {
         type: String,
         required: true
+    },
+    photo: {
+        type: String,
+        default: ""
     },
     birthdate: {
         type: Date,
@@ -31,6 +40,14 @@ const ConsultantSchema = new Schema({
         default: 0.00
     },
     consultantType: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
+    city: {
         type: String,
         required: true
     }

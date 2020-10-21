@@ -4,7 +4,7 @@ const debug = require("debug")("log");
 
 const ConsultantService = {};
 
-ConsultantService.verifyCreateFields = ({ firstName, lastName, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType }) => {
+ConsultantService.verifyCreateFields = ({ firstName, lastName, birthdate, referencePrice, historicAveragePrice, phoneNumber, consultantType, state, city }) => {
     let serviceRespone = {
         success: true,
         content: {
@@ -12,7 +12,7 @@ ConsultantService.verifyCreateFields = ({ firstName, lastName, birthdate, refere
         }
     }
     
-    if(!firstName || !lastName || !birthdate || !referencePrice || !historicAveragePrice || !phoneNumber || !consultantType){
+    if(!firstName || !lastName || !birthdate || !referencePrice || !historicAveragePrice || !phoneNumber || !consultantType || !state || !city){
         serviceRespone = {
             success: false, 
             content:{
@@ -24,7 +24,7 @@ ConsultantService.verifyCreateFields = ({ firstName, lastName, birthdate, refere
     return serviceRespone;
 };
 
-ConsultantService.createNewConsultant = async ({ firstName, lastName, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType }) => {
+ConsultantService.createNewConsultant = async ({user, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city }) => {
     let serviceRespone = {
         success: true, 
         content: {
@@ -33,7 +33,7 @@ ConsultantService.createNewConsultant = async ({ firstName, lastName, birthdate,
     }
     
     try{
-        const newConsultant = new ConsultantModel({firstName, lastName, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType});
+        const newConsultant = new ConsultantModel({user, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city});
         console.log("New Consultant Model: "+ newConsultant);
         
         const savedConsultant = await newConsultant.save();
