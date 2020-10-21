@@ -7,7 +7,7 @@ BusinessService.test = () => {
     let serviceResponse = {
         success: true,
         content: {
-            message: "This sht works!"
+            message: "This works!"
         }
     };
     return serviceResponse;

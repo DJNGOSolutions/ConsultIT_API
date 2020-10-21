@@ -85,7 +85,7 @@ BusinessLineService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "Post deleted!"
+            message: "Business line deleted!"
         }
     }
     
@@ -95,14 +95,14 @@ BusinessLineService.deleteOneByID = async (_id) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Post could not be deleted"
+                    error: "Business line could not be deleted"
                 }
             }
         }
 
         return serviceResponse;
     } catch (error) {
-        console.log("An eorro occurred: " + error);
+        console.log("An error occurred: " + error);
         throw new Error("Internal Server Error");
     }
 }
