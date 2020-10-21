@@ -27,7 +27,7 @@ const ConsultantSchema = new Schema({
         required: true
     },
     averageRating: {
-        type: Boolean,
+        type: Number,
         default: 0.00
     },
     consultantType: {
