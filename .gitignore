@@ -7,3 +7,5 @@
 #Added the node_modules bc best practices
 
 /node_modules
+
+/data

@@ -1,9 +1,8 @@
 const moongose = require('mongoose');
 
 const dbhost = process.env.DBHOST || "localhost";
-const dbport = process.env.DBHOST || "27017";
+const dbport = process.env.DBPORT || "27017";
 const dbname = process.env.DBNAME || "ConsultIT";
-
 const dburi = process.env.DBURI || `mongodb://${dbhost}:${dbport}/${dbname}`;
 
 const connect = async() => {
@@ -17,6 +16,7 @@ const connect = async() => {
         console.log("DB connection successful");
     } catch(error) {
         console.log("Error in DB connection");
+        console.log(dburi);
         process.exit(1);
     }
 }
