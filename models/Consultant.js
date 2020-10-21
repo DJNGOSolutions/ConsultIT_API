@@ -15,7 +15,10 @@ const ConsultantSchema = new Schema({
         type: String,
         required: true
     },
-    photo: String,
+    photo: {
+        type: String,
+        default: ""
+    },
     birthdate: {
         type: Date,
         required: true

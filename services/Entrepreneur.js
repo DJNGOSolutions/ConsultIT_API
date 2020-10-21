@@ -4,7 +4,7 @@ const debug = require("debug")("log");
 
 const EntrepreneurService = {};
 
-EntrepreneurService.verifyCreateFields = ({ user, firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city}) => {
+EntrepreneurService.verifyCreateFields = ({firstName, lastName, birthdate, phoneNumber, postalAddress, state, city}) => {
     let serviceResponse = {
         success: true,
         content: {
@@ -12,7 +12,7 @@ EntrepreneurService.verifyCreateFields = ({ user, firstName, lastName, photo, bi
         }
     }
     
-    if(!user || !firstName || !lastName || !photo || !birthdate || !phoneNumber || !postalAddress || !state || !city){
+    if(!firstName || !lastName || !birthdate || !phoneNumber || !postalAddress || !state || !city){
         let serviceResponse = {
             success: false,
             content: {
@@ -74,7 +74,7 @@ EntrepreneurService.findAll = async () => {
                 }
             }
         }else{
-            serviceResponse.content{
+            serviceResponse.content= {
                 entrepreneurs,
                 count: entrepreneurs.length
             } 
