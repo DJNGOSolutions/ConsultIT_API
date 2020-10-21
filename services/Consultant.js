@@ -65,7 +65,7 @@ ConsultantService.findAll = async () => {
             serviceRespone = {
                 success: false,
                 content:{
-                 error: "Could not find any consultants"
+                error: "Could not find any consultants"
                 }
             }
         } else {

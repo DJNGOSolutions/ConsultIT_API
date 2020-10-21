@@ -102,7 +102,7 @@ BusinessSectorService.deleteOneByID = async (_id) => {
 
         return serviceResponse;
     } catch (error) {
-        console.log("An eorro occurred: " + error);
+        console.log("An error occurred: " + error);
         throw new Error("Internal Server Error");
     }
 }

@@ -12,7 +12,7 @@ EntrepreneurService.verifyCreateFields = ({ user, firstName, lastName, photo, bi
     }
     
     if(!user || !firstName || !lastName || !photo || !birthdate || !phoneNumber || !postalAddress || !state || !city || !businesses){
-        let serviceResponse = {
+        serviceResponse = {
             success: false,
             content: {
                 message: "A required field was not provided"
