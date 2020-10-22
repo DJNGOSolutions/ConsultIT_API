@@ -44,4 +44,81 @@ StateService.createNewState = async ({ name }) => {
     }
 }
 
+StateService.findAllStates = async (page, limit) => {
+    let serviceResponse = {
+        success: true,
+        content: {}
+    }
+
+    try{
+        const States = await StateModel.find({}, undefined, {
+            skip: page * limit,
+            limit: limit,
+            sort: [{
+                updatedAt: -1
+            }]
+        }).exec();
+
+        if(!States){
+            serviceResponse = {
+                success: false,
+                content: {
+                    error: "States were not found."
+                }
+            }
+
+            return serviceResponse;
+        }
+
+        serviceResponse.content = {
+            States,
+            count: States.length,
+            page,
+            limit
+        };
+
+        return serviceResponse;       
+    }catch(error){
+        throw new Error("Internal Server Error.")
+    }
+}
+
+StateService.deleteOneById = async (_id) => {
+    let serviceResponse = {
+        success: true,
+        content: {
+            message: "State was deleted."
+        }
+    }
+    if(!_id){
+        serviceResponse = {
+            success: false,
+            content: {
+                error: "Missing id."
+            }
+        }
+
+        return serviceResponse;
+    }
+
+    try{
+        const stateWasDeleted = await StateModel.findByIdAndDelete(_id).exec();
+        if(!stateWasDeleted){
+            serviceResponse = {
+                success: false,
+                content: {
+                    error: "State could not be deleted."
+                }
+            }
+
+            return serviceResponse;
+        }
+
+        return serviceResponse;
+    }catch(error){
+        throw new Error("Internal Server Error.")
+    }
+
+}
+
 module.exports = StateService;

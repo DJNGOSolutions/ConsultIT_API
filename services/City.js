@@ -71,4 +71,42 @@ CityService.findAll = async (page, limit) => {
     }
 }
 
+CityService.deleteOneById = async (_id) => {
+    let serviceResponse = {
+        success: true,
+        content: {
+            message: "City was deleted."
+        }
+    }
+
+    if(!_id){
+        serviceResponse = {
+            success: false,
+            content: {
+                error: "Missing id."
+            }
+        }
+
+        return serviceResponse;
+    }
+
+    try {
+        const cityDeleted = await CityModel.findByIdAndDelete(_id).exec();
+        if(!cityDeleted){
+            serviceResponse = {
+                success: false,
+                content: {
+                    error: "City could not be deleted."
+                }
+            }
+
+            return serviceResponse;
+        }
+
+        return serviceResponse
+    } catch(error) {
+        throw new Error("Internal Server Error.");
+    }
+}
+
 module.exports = CityService;
