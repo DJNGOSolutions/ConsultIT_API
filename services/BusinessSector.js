@@ -1,7 +1,7 @@
 const BusinessSectorModel = require("../models/BusinessSector");
 const debug = require("debug")("log");
 
-const BusinessSector = {};
+const BusinessSectorService = {};
 
 BusinessSectorService.verifyCreateFields = ({ name }) => {
     let serviceResponse = {
@@ -71,7 +71,9 @@ BusinessSectorService.findAll = async () => {
         } else {
             serviceResponse.content = {
                 businessessectors,
-                count: businessessectors.length
+                count: businessessectors.length,
+                page,
+                limit
             }
         }
         return serviceResponse;

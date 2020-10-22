@@ -71,7 +71,9 @@ ConsultantService.findAll = async () => {
         } else {
             serviceRespone.content = {
                 consultants,
-                count: consultants.length
+                count: consultants.length,
+                page,
+                limit
             }
         }
         return serviceRespone;

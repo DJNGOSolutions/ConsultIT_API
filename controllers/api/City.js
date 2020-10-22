@@ -1,3 +1,4 @@
+const { restart } = require('nodemon');
 const CityService = require('../../services/City');
 const { verifyTypeNumber } = require('../../utils/MiscUtils');
 
@@ -24,7 +25,7 @@ CityController.addNewCity = async(req, res) => {
 }
 
 CityController.findAllCities = async (req, res) => {
-    const { page = 0, limit = 14 } = req.query;
+    const { page = 0, limit = 10 } = req.query;
 
     if (!verifyTypeNumber(page, limit)) {
         return res.status(400).json({
@@ -40,6 +41,29 @@ CityController.findAllCities = async (req, res) => {
     } catch(error) {
         return res.status(500).json({
             error: error.message
+        })
+    }
+}
+
+CityController.deleteCity = async (req, res) => {
+    const { _id } = req.body;
+
+    if(!_id){
+        return res.status(403).json({
+            error: "Missing id."
+        })
+    }
+
+    try{
+        const cityWasDeleted = await CityService.deleteOneById(_id);
+        if(!cityWasDeleted.success){
+            return res.status(409).json(cityWasDeleted.content);
+        }
+
+        return res.status(200).json(cityWasDeleted.content);
+    }catch(error){
+        return res.status(500).json({
+            error: "Internal Server Error."
         })
     }
 }

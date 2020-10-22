@@ -3,6 +3,10 @@ const router = express.Router();
 
 const StateController = require('./../../controllers/api/State');
 
-router.post('/newstate', StateController.addNewState);
+router.post('/newState', StateController.addNewState);
+
+router.get('/findAll', StateController.findAll);
+
+router.delete('/delete', StateController.delete);
 
 module.exports = router;

@@ -71,7 +71,9 @@ ConsultantTypeService.findAll = async () => {
         } else {
             serviceResponse.content = {
                 consultantstypes,
-                count: consultantstypes.length
+                count: consultantstypes.length,
+                page,
+                limit
             }
         }
         return serviceResponse;

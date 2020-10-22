@@ -1,4 +1,3 @@
-const { count } = require('../models/Entrepreneur');
 const EntrepreneurModel = require('../models/Entrepreneur');
 const debug = require("debug")("log");
 
@@ -76,7 +75,9 @@ EntrepreneurService.findAll = async () => {
         }else{
             serviceResponse.content= {
                 entrepreneurs,
-                count: entrepreneurs.length
+                count: entrepreneurs.length,
+                page,
+                limit   
             } 
         }
         return serviceResponse;
