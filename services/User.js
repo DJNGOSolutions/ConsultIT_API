@@ -1,17 +1,22 @@
-const UserModel = require('../models/User')
+const UserModel = require('../models/User');
+
+const ConsultantService = require('./Consultant');
+const EntrepreneurService = require('./Entrepreneur');
 
 const emailRegex = new RegExp("^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$");
 
 const UserService = {};
 
 //Sing up service
-UserService.verifyRegistrationFields = ({ username, email, password }) => {
+UserService.verifyRegistrationFields = ({ username, email, password, type,  firstName, lastName, birthdate, phoneNumber, postalAddress, state, city, referencePrice, historicAveragePrice, consultantType}) => {
     let serviceResponse = {
         success: true,
-        content: {}
+        content: {
+            message: "Fields OK"
+        }
     }
     
-    if(!username || !email || !password){
+    if(!username || !email || !password || !type){
         serviceResponse = {
             success: false,
             content: {
@@ -31,6 +36,42 @@ UserService.verifyRegistrationFields = ({ username, email, password }) => {
         }
 
         return serviceResponse;
+    }
+    
+    switch (type) {
+        case "consultant":
+            const ConsultantValidation = ConsultantService.verifyCreateFields(firstName, lastName, birthdate, referencePrice, historicAveragePrice, phoneNumber, consultantType, state, city);
+            
+            if (!ConsultantValidation.success){
+                serviceResponse = {
+                    success: false,
+                    content: {
+                        message: "Some required fields are empty."
+                    }
+                }   
+            }
+
+            break;
+        case "entrepreneur":
+            const EntrepreneurValidation = EntrepreneurValidation.verifyCreateFields(firstName, lastName, birthdate, phoneNumber, postalAddress, state, city);
+            
+            if (!EntrepreneurService.success){
+                serviceResponse = {
+                    success: false,
+                    content: {
+                        message: "Some required fields are empty."
+                    }
+                }   
+            }
+            break;
+        default:
+            serviceResponse = {
+                success: false,
+                content: {
+                    message: "Wrong type for user."
+                }
+            }
+            break;
     }
 
     return serviceResponse;
@@ -61,7 +102,8 @@ UserService.findOneUsernameOrEmail = async (username, email) => {
             serviceResponse = {
                 success: true,
                 content: {
-                    message: "Welcome!"
+                    message: "User found",
+                    user
                 }
             }
         }
@@ -73,36 +115,81 @@ UserService.findOneUsernameOrEmail = async (username, email) => {
 }
 
 //Sign up service
-UserService.register = async ({ username, email, password }) => {
+UserService.register = async ({ username, email, password, type,  firstName, lastName, birthdate, phoneNumber, postalAddress, state, city, referencePrice, historicAveragePrice, consultantType}) => {
+
     let serviceResponse = {
         success: true,
         content: {
             message: "User registrated."
         }
     }
+
     try {
-        const user = new UserModel({ 
+
+        const newUser = new UserModel({ 
             username, 
             email,
-            password
+            password,
+            type
         });
-        const userSaved = await user.save();
+
+        const userSaved = await newUser.save();
 
         if (!userSaved) {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "User could not be registrated."
+                    error: "User could not be registered"
                 }
             }
         }
+        
+        switch(type) {
+            case "consultant":
+                const newConsultant = ConsultantService.createNewConsultant(newUser, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city);
+            
+                if (!newConsultant.success){
+                    serviceResponse = {
+                        success: false,
+                        content: {
+                            message: "User could not be registered"
+                        }
+                    }   
+                }
+                break;
+
+            case "entrepreneur":
+                
+                const newEntrepreneur = EntrepreneurValidation.createNewConsultant(newUser, firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city);
+            
+                if (!newEntrepreneur.success){
+                    serviceResponse = {
+                        success: false,
+                        content: {
+                            message: "User could not be registered"
+                        }
+                    }   
+                }
+
+                break;
+            default:
+                serviceResponse = {
+                    success: false,
+                    content: {
+                        message: "Wrong type for user."
+                    }
+                }   
+                break;
+        }
 
         return serviceResponse;
+
     } catch(error) {
+
         throw new Error("Internal Server Error")
     }
-}
 
+}
 //Sign in service
 UserService.verifyLoginFields = ({ identifier, password }) => {
     let serviceResponse = {
