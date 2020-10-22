@@ -71,7 +71,9 @@ BusinessLineService.findAll = async () => {
         } else {
             serviceResponse.content = {
                 businesseslines,
-                count: businesseslines.length
+                count: businesseslines.length,
+                page,
+                limit
             }
         }
         return serviceResponse;

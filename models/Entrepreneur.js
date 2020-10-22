@@ -41,7 +41,7 @@ const EntrepreneurSchema = new Schema({
     },
     businesses: [{
         type: mongoose.Schema.Types.ObjectId,
-        rel: Business
+        rel: "Business"
     }]
 });
 

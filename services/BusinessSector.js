@@ -71,7 +71,9 @@ BusinessSectorService.findAll = async () => {
         } else {
             serviceResponse.content = {
                 businessessectors,
-                count: businessessectors.length
+                count: businessessectors.length,
+                page,
+                limit
             }
         }
         return serviceResponse;

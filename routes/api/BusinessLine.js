@@ -7,4 +7,6 @@ router.post("/create", BusinessLineController.create);
 
 router.get("/findAll", BusinessLineController.findAll);
 
+router.delete("/delete", BusinessLineController.delete);
+
 module.exports = router;
