@@ -38,7 +38,7 @@ BusinessLineController.findAll = async (req, res) => {
             return res.status(409).json(businessLineList.content);
         }
 
-        return res.status(500).json(businessLineList.content);
+        return res.status(200).json(businessLineList.content);
     }catch(error){
         return res.status(500).json({
             error: "Internal Server Error."

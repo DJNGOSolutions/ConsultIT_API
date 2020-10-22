@@ -1,7 +1,7 @@
 const BusinessSectorModel = require("../models/BusinessSector");
 const debug = require("debug")("log");
 
-const BusinessSector = {};
+const BusinessSectorService = {};
 
 BusinessSectorService.verifyCreateFields = ({ name }) => {
     let serviceResponse = {
