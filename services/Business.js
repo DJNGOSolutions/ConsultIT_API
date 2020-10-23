@@ -74,6 +74,7 @@ BusinessService.findAll = async () => {
     
     try{
         const businesses = await BusinessModel.find();
+        console.log("FOUND: " + businesses);
         if(!businesses){
             serviceResponse = {
                 success: false, 
@@ -84,9 +85,7 @@ BusinessService.findAll = async () => {
         } else {
             serviceResponse.content = {
                 businesses,
-                count: businesses.length,
-                page,
-                limit
+                count: businesses.length
             }
         } 
         return serviceResponse;
@@ -96,21 +95,6 @@ BusinessService.findAll = async () => {
     }
 };
 
-BusinessService.updateByID = async (_id) => {
-   let serviceResponse = {
-       success: true,
-       content: {
-           message: "Business updated"
-       }
-   } 
-   
-   try{
-
-   }catch(error){
-       console.log("An error occurred" + error);
-       throw new Error("Internal Server Error");
-   }
-};
 
 BusinessService.deleteOneByID = async (_id) => {
     let serviceResponse = {
