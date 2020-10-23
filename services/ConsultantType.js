@@ -1,7 +1,7 @@
 const ConsultantTypeModel = require("../models/ConsultantType");
 const debug = require("debug")("log");
 
-const ConsultantType = {};
+const ConsultantTypeService = {};
 
 ConsultantTypeService.verifyCreateFields = ({ name }) => {
     let serviceResponse = {
