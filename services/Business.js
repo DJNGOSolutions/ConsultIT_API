@@ -96,11 +96,27 @@ BusinessService.findAll = async () => {
     }
 };
 
+BusinessService.updateByID = async (_id) => {
+   let serviceResponse = {
+       success: true,
+       content: {
+           message: "Business updated"
+       }
+   } 
+   
+   try{
+
+   }catch(error){
+       console.log("An error occurred" + error);
+       throw new Error("Internal Server Error");
+   }
+};
+
 BusinessService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "Business deleted!"
+            message: "Business deleted"
         }
     }
     
