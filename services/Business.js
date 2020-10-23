@@ -74,6 +74,7 @@ BusinessService.findAll = async () => {
     
     try{
         const businesses = await BusinessModel.find();
+        console.log("FOUND: " + businesses);
         if(!businesses){
             serviceResponse = {
                 success: false, 
@@ -84,9 +85,7 @@ BusinessService.findAll = async () => {
         } else {
             serviceResponse.content = {
                 businesses,
-                count: businesses.length,
-                page,
-                limit
+                count: businesses.length
             }
         } 
         return serviceResponse;
@@ -96,11 +95,12 @@ BusinessService.findAll = async () => {
     }
 };
 
+
 BusinessService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "Business deleted!"
+            message: "Business deleted"
         }
     }
     
