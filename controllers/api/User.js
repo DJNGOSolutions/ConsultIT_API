@@ -32,7 +32,7 @@ UserController.register = async(req, res) => {
             error: "Internal Server Error"
         })
     }
-}
+};
 
 UserController.login = async(req, res) => {
 
@@ -56,6 +56,6 @@ UserController.login = async(req, res) => {
             error: "Internal Server Error"
         })
     }
-}
+};
 
 module.exports = UserController;

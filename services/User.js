@@ -115,7 +115,7 @@ UserService.findOneUsernameOrEmail = async (username, email) => {
 }
 
 //Sign up service
-UserService.register = async ({ username, email, password, type,  firstName, lastName, birthdate, phoneNumber, postalAddress, state, city, referencePrice, historicAveragePrice, consultantType}) => {
+UserService.register = async ({ username, email, password, type,  firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city, referencePrice, historicAveragePrice, consultantType, averageRating }) => {
 
     let serviceResponse = {
         success: true,

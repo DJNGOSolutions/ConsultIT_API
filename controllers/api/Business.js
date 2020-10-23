@@ -42,6 +42,13 @@ BusinessController.findAll = async (req, res) => {
 
 BusinessController.deleteByID = async (req, res) => {
     const { _id } = req.body;
+
+    if (!_id) {
+        return res.status(403).json({
+            error: "Missing id."
+        })
+    }
+
     try{
         const businessDeleted = await BusinessService.deleteOneByID(_id);
         if(!businessDeleted.success){
