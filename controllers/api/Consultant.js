@@ -18,6 +18,13 @@ ConsultantController.findAll = async(req, res) => {
 
 ConsultantController.deleteByID = async (req, res) => {
     const { _id } = req.body;
+
+    if (!_id) {
+        return res.status(403).json({
+            error: "Missing id."
+        })
+    }
+
     try{
         const consultantDeleted = await ConsultantService.deleteOneByID(_id); 
         if(!consultantDeleted.success){

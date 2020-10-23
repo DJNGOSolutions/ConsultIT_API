@@ -16,8 +16,15 @@ EntrepreneurController.findAll = async(req, res) => {
     }
 };
 
-EntrepreneurService.deleteByID = async (req, res) => {
+EntrepreneurController.deleteByID = async (req, res) => {
     const { _id } = req.body;
+
+    if (!_id) {
+        return res.status(403).json({
+            error: "Missing id."
+        })
+    }
+
     try{
         const entrepreneurDeleted = await EntrepreneurService.deleteOneByID(_id); 
         if(!entrepreneurDeleted.success){
