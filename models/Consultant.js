@@ -24,11 +24,11 @@ const ConsultantSchema = new Schema({
         required: true
     },
     referencePrice: {
-        type: Boolean,
+        type: Number,
         required: true
     },
     historicAveragePrice: {
-        type: Boolean,
+        type: Number,
         required: true
     },
     phoneNumber: {
