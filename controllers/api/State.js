@@ -27,7 +27,7 @@ StateController.findAll = async (req, res) => {
     if(!verifyTypeNumber(page, limit)){
         return res.status(403).json({
             error: "Mistype query."
-        })
+        });
     }
 
     try{

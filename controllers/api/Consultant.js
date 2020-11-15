@@ -1,10 +1,19 @@
 const ConsultantService = require('../../services/Consultant');
+const { verifyTypeNumber } = require('../../utils/MiscUtils');
 
 const ConsultantController = {};
 
 ConsultantController.findAll = async(req, res) => {
+    const { page = 0, limit = 10 } = req.query;
+
+    if(!verifyTypeNumber(page, limit)){
+        return res.status(403).json({
+            error: "Mistype query."
+        });
+    }
+    
     try{
-        const consultantResponse = await ConsultantService.findAll();
+        const consultantResponse = await ConsultantService.findAll(parseInt(page), parseInt(limit));
         if(!consultantResponse.success){
             return res.status(204).json(consultantResponse.content);
         }

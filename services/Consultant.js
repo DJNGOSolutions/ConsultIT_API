@@ -52,14 +52,21 @@ ConsultantService.createNewConsultant = async (user, firstName, lastName, photo,
     }
 };
 
-ConsultantService.findAll = async () => {
+ConsultantService.findAll = async (page, limit) => {
     let serviceRespone = {
         success: true,
         content: {}
     }
     
     try{
-        const consultants =  await ConsultantModel.find();
+        const consultants =  await ConsultantModel.find({}, undefined, {
+            skip: page * limit,
+            limit: limit,
+            sort: [{
+                updatedAt: -1
+            }]
+        }).exec();
+        
         if(!consultants){
             serviceRespone = {
                 success: false,
