@@ -1,4 +1,5 @@
 const EntrepreneurService = require('../../services/Entrepreneur');
+const UserService = require('../../services/User');
 
 const EntrepreneurController = {};
 
@@ -9,6 +10,31 @@ EntrepreneurController.findAll = async(req, res) => {
             return res.status(204).json(entrepreneurResponse.content);
         }
         return res.status(200).json(entrepreneurResponse.content);
+    }catch(error){
+        return res.status(500).json({
+            error: "Internal Server Error"
+        })
+    }
+};
+
+EntrepreneurController.findAllBusinesses = async(req, res) => {
+    let { username } = req.body;
+
+    if(!username){
+        return res.status(403).json({
+            error: "Missing username."
+        })
+    }
+
+    const userFound = await UserService.findOneUsernameOrEmail(username, "");
+    if(!userFound.success){
+        return res.status(204).json(userFound.content);
+    }
+
+    try{
+        const id = userFound.content.user._id
+        const businessesResponse = await EntrepreneurService.findAllBusinesses(id);
+        
     }catch(error){
         return res.status(500).json({
             error: "Internal Server Error"

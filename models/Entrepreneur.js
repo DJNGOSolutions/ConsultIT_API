@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
-const User = require("./User");
 const Schema = mongoose.Schema;
 
 const EntrepreneurSchema = new Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId,
-        rel: User
+        rel: "User"
     },
     firstName: {
         type: String,
