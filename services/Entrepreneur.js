@@ -99,7 +99,7 @@ EntrepreneurService.findAll = async () => {
                 }
             }
         }else{
-            serviceResponse.content= {
+            serviceResponse.content = {
                 entrepreneurs,
                 count: entrepreneurs.length,
                 page,
@@ -112,6 +112,33 @@ EntrepreneurService.findAll = async () => {
         throw new Error("Internal Server Error");
     }
 };
+
+EntrepreneurService.findAllBusinesses = async (_id) => {
+    let serviceResponse ={
+        success: true,
+        content: {}
+    }
+    
+    try{
+        const entrepreneur = await EntrepreneurModel.findOne({user: _id}).populate("businesses");
+        if(!entrepreneur){
+            serviceResponse = {
+                success: false,
+                content: {
+                    error: "Could not find this entrepreneur"
+                }
+            }
+        }else{
+            serviceResponse.content = {
+                entrepreneur
+            }
+        }
+        return serviceResponse;
+    }catch(error){
+        console.log("An error occurred" + error);
+        throw new Error("Internal Server Error");
+    }
+}
 
 EntrepreneurService.deleteOneByID = async (_id) => {
     let serviceResponse = {

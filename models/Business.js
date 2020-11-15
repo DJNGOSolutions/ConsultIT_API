@@ -35,6 +35,10 @@ const BusinessSchema = new Schema({
     businessSector: {
         type: String,
         required: true
+    },
+    owner:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Entrepreneur"
     }
 });
 
