@@ -1,5 +1,7 @@
 const EntrepreneurService = require('../../services/Entrepreneur');
+const { verifyID } = require('./../../utils/MongoUtils');
 const UserService = require('../../services/User');
+
 
 const EntrepreneurController = {};
 
@@ -63,5 +65,40 @@ EntrepreneurController.deleteByID = async (req, res) => {
         })
     }
 };
+
+EntrepreneurController.updateEntrepreneur = async (req, res) => {
+    const { _id } = req.body;
+    
+    if (!verifyID(_id)) {
+        return res.status(400).json({
+            error: "Error in ID"
+        });
+    }
+
+    const fieldsVerified = EntrepreneurService.verifyUpdateFields(req.body);
+    if(!fieldsVerified.success) {
+        return res.status(400).json(fieldsVerified.content);
+    }
+
+    try {
+        const entrepreneurExists = await EntrepreneurService.findOneEntrepreneurByUser(user)
+
+        if (!entrepreneurExists.success) {
+            return res.status(404).json(entrepreneurExists.content);
+        }
+
+        const entrepreneurUpdated = await EntrepreneurService.updateEntrepreneurById(entrepreneurExists, req.body);
+
+        if (!entrepreneurUpdated.success) {
+            return res.status(409).json(entrepreneurUpdated.content);
+        }
+
+        return res.status(202).json(entrepreneurUpdated.content);
+    } catch (error) {
+        return res.status(500).json({
+            error: "Internal Server Error."
+        })
+    }
+}
 
 module.exports = EntrepreneurController;

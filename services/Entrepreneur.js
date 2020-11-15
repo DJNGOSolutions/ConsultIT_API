@@ -1,5 +1,5 @@
+const { Error } = require('mongoose');
 const EntrepreneurModel = require('../models/Entrepreneur');
-const debug = require("debug")("log");
 
 const EntrepreneurService = {};
 
@@ -22,6 +22,32 @@ EntrepreneurService.verifyCreateFields = (firstName, lastName, birthdate, phoneN
     
     return serviceResponse;
 };
+
+EntrepreneurService.findOneEntrepreneurByUser = async (user) => {
+    let serviceResponse = {
+        success: true,
+        content: {}
+    }
+
+    try {
+        const entrepreneur = await EntrepreneurModel.findOne({user: user})
+
+        if (!entrepreneur) {
+            serviceResponse = {
+                success: false,
+                content: {
+                    error: "User not found."
+                }
+            }
+        } else {
+            serviceResponse.content = entrepreneur;
+        }
+        
+        return serviceResponse;
+    } catch(error) {
+        throw new Error("Internal Server Error.");
+    }
+}
 
 EntrepreneurService.createNewEntrepreneur = async (user, firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city, businesses) => {
     let serviceResponse = {
@@ -136,6 +162,63 @@ EntrepreneurService.deleteOneByID = async (_id) => {
     }catch(error){
         console.log("An error occurred: " + error);
         throw new Error("Internal Server Error");
+    }
+}
+
+EntrepreneurService.verifyUpdateFields = ({ firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city }) => {
+    let serviceResponse = {
+        success: true,
+        content: {}
+    }
+
+    if(!firstName && !lastName && !photo && !birthdate && !phoneNumber && !postalAddress && !state && !city) {
+        serviceResponse = {
+            success: false,
+            content: {
+                error: "No fields to change."
+            }
+        }
+
+        return serviceResponse;
+    }
+
+    if(firstName) serviceResponse.content.firstName = firstName;
+    if(lastName) serviceResponse.content.lastName = lastName;
+    if(photo) serviceResponse.content.photo = photo;
+    if(birthdate) serviceResponse.content.birthdate = birthdate;
+    if(phoneNumber) serviceResponse.content.phoneNumber = phoneNumber;
+    if(postalAddress) serviceResponse.content.postalAddress = postalAddress;
+    if(state) serviceResponse.content.state = state;
+    if(city) serviceResponse.content.city = city;
+
+    return serviceResponse;
+}
+
+EntrepreneurService.updateEntrepreneurById = async (entrepreneur, newEntrepreneurData) => {
+    let serviceResponse = {
+        success: true,
+        content: {}
+    }
+
+    try {
+        const updatedEntrepreneur = await EntrepreneurModel.findByIdAndUpdate(entrepreneur._id, {
+            ...newEntrepreneurData,
+        });
+
+        if (!updatedEntrepreneur) {
+            serviceResponse = {
+                success: false,
+                content: {
+                    error: "Entrepreneur was not updated."
+                }
+            }
+        } else {
+            serviceResponse.content = updatedEntrepreneur;
+        }
+
+        return serviceResponse;
+    } catch(error) {
+        throw new Error("Internal Server Error.")
     }
 }
 
