@@ -53,9 +53,9 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
 
             break;
         case "entrepreneur":
-            const EntrepreneurValidation = EntrepreneurValidation.verifyCreateFields(firstName, lastName, birthdate, phoneNumber, postalAddress, state, city);
+            const EntrepreneurValidation = EntrepreneurService.verifyCreateFields(firstName, lastName, birthdate, phoneNumber, postalAddress, state, city);
             
-            if (!EntrepreneurService.success){
+            if (!EntrepreneurValidation.success){
                 serviceResponse = {
                     success: false,
                     content: {
@@ -146,13 +146,13 @@ UserService.register = async ({ username, email, password, type,  firstName, las
         
         switch(type) {
             case "consultant":
-                const newConsultant = ConsultantService.createNewConsultant(newUser, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city);
-            
+                const newConsultant =  await ConsultantService.createNewConsultant(userSaved, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city);
+
                 if (!newConsultant.success){
                     serviceResponse = {
                         success: false,
                         content: {
-                            message: "User could not be registered"
+                            message: "Consultant could not be registered"
                         }
                     }   
                 }
@@ -160,13 +160,13 @@ UserService.register = async ({ username, email, password, type,  firstName, las
 
             case "entrepreneur":
                 
-                const newEntrepreneur = EntrepreneurValidation.createNewConsultant(newUser, firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city);
-            
+                const newEntrepreneur = await EntrepreneurService.createNewEntrepreneur(userSaved, firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city);
+                
                 if (!newEntrepreneur.success){
                     serviceResponse = {
                         success: false,
                         content: {
-                            message: "User could not be registered"
+                            message: "Entrepreneur could not be registered"
                         }
                     }   
                 }
@@ -185,7 +185,6 @@ UserService.register = async ({ username, email, password, type,  firstName, las
         return serviceResponse;
 
     } catch(error) {
-
         throw new Error("Internal Server Error")
     }
 

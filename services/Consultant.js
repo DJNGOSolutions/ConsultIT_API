@@ -4,7 +4,7 @@ const debug = require("debug")("log");
 
 const ConsultantService = {};
 
-ConsultantService.verifyCreateFields = ({ firstName, lastName, birthdate, referencePrice, historicAveragePrice, phoneNumber, consultantType, state, city }) => {
+ConsultantService.verifyCreateFields = (firstName, lastName, birthdate, referencePrice, historicAveragePrice, phoneNumber, consultantType, state, city) => {
     let serviceRespone = {
         success: true,
         content: {
@@ -24,7 +24,7 @@ ConsultantService.verifyCreateFields = ({ firstName, lastName, birthdate, refere
     return serviceRespone;
 };
 
-ConsultantService.createNewConsultant = async ({user, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city }) => {
+ConsultantService.createNewConsultant = async (user, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city) => {
     let serviceRespone = {
         success: true, 
         content: {
@@ -34,7 +34,6 @@ ConsultantService.createNewConsultant = async ({user, firstName, lastName, photo
     
     try{
         const newConsultant = new ConsultantModel({user, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city});
-        console.log("New Consultant Model: "+ newConsultant);
         
         const savedConsultant = await newConsultant.save();
         if(!savedConsultant) {
@@ -53,14 +52,21 @@ ConsultantService.createNewConsultant = async ({user, firstName, lastName, photo
     }
 };
 
-ConsultantService.findAll = async () => {
+ConsultantService.findAll = async (page, limit) => {
     let serviceRespone = {
         success: true,
         content: {}
     }
     
     try{
-        const consultants =  await ConsultantModel.find();
+        const consultants =  await ConsultantModel.find({}, undefined, {
+            skip: page * limit,
+            limit: limit,
+            sort: [{
+                updatedAt: -1
+            }]
+        }).exec();
+        
         if(!consultants){
             serviceRespone = {
                 success: false,

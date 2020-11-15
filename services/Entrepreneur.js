@@ -3,7 +3,7 @@ const debug = require("debug")("log");
 
 const EntrepreneurService = {};
 
-EntrepreneurService.verifyCreateFields = ({firstName, lastName, birthdate, phoneNumber, postalAddress, state, city}) => {
+EntrepreneurService.verifyCreateFields = (firstName, lastName, birthdate, phoneNumber, postalAddress, state, city) => {
     let serviceResponse = {
         success: true,
         content: {
@@ -12,7 +12,7 @@ EntrepreneurService.verifyCreateFields = ({firstName, lastName, birthdate, phone
     }
     
     if(!firstName || !lastName || !birthdate || !phoneNumber || !postalAddress || !state || !city){
-        let serviceResponse = {
+        serviceResponse = {
             success: false,
             content: {
                 message: "A required field was not provided"
@@ -23,7 +23,7 @@ EntrepreneurService.verifyCreateFields = ({firstName, lastName, birthdate, phone
     return serviceResponse;
 };
 
-EntrepreneurService.createNewEntrepreneur = async ({ user, firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city, businesses }) => {
+EntrepreneurService.createNewEntrepreneur = async (user, firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city, businesses) => {
     let serviceResponse = {
         success: true,
         content: {
