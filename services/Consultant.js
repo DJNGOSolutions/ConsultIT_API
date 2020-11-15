@@ -62,9 +62,6 @@ ConsultantService.findAll = async (page, limit) => {
         const consultants =  await ConsultantModel.find({}, undefined, {
             skip: page * limit,
             limit: limit,
-            sort: [{
-                updatedAt: -1
-            }]
         }).exec();
         
         if(!consultants){

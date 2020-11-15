@@ -1,13 +1,20 @@
 const EntrepreneurService = require('../../services/Entrepreneur');
 const { verifyID } = require('./../../utils/MongoUtils');
 const UserService = require('../../services/User');
+const { verifyTypeNumber } = require('../../utils/MiscUtils');
 
 
 const EntrepreneurController = {};
 
 EntrepreneurController.findAll = async(req, res) => {
+    const { page = 0, limit = 10 } = req.query;
+    
+    if(!verifyTypeNumber(page, limit)){
+        return res.status(403).json({error: "Mistype query."});
+    }
+
     try{
-        const entrepreneurResponse = await EntrepreneurService.findAll();
+        const entrepreneurResponse = await EntrepreneurService.findAll(parseInt(page), parseInt(limit));
         if(!entrepreneurResponse.success){
             return res.status(204).json(entrepreneurResponse.content);
         }

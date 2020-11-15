@@ -83,14 +83,17 @@ EntrepreneurService.createNewEntrepreneur = async (user, firstName, lastName, ph
     }
 };
 
-EntrepreneurService.findAll = async () => {
+EntrepreneurService.findAll = async (page, limit) => {
     let serviceResponse = {
         success: true, 
         content: {}
     }
 
     try{
-        const entrepreneurs = await EntrepreneurModel.find();
+        const entrepreneurs = await EntrepreneurModel.find({}, undefined, {
+            skip: page * limit,
+            limit: limit,
+        }).exec();
         if(!entrepreneurs){
             serviceResponse = {
                 success: false,
