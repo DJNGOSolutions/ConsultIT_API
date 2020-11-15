@@ -34,9 +34,13 @@ EntrepreneurController.findAllBusinesses = async(req, res) => {
     }
 
     try{
-        const id = userFound.content.user._id
-        const businessesResponse = await EntrepreneurService.findAllBusinesses(id);
-        
+        const user = userFound.content.user;
+        console.log("El usuario es " + user);
+        const businessesResponse = await EntrepreneurService.findAllBusinesses(user._id);
+        if(!businessesResponse.success){
+            return res.status(204).json(businessesResponse.content);
+        }
+        return res.status(200).json(businessesResponse.content);
     }catch(error){
         return res.status(500).json({
             error: "Internal Server Error"

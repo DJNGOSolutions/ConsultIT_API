@@ -3,6 +3,8 @@ const UserService = require('../../services/User');
 const UserController = {};
 
 UserController.register = async(req, res) => { 
+    
+    console.log(req.body);
 
     const FieldsVerification = UserService.verifyRegistrationFields(req.body);
     
@@ -52,6 +54,41 @@ UserController.login = async(req, res) => {
 
         return res.status(200).json(UserFound.content);
     } catch(error) {
+        return res.status(500).json({
+            error: "Internal Server Error"
+        })
+    }
+};
+
+UserController.findAll = async (req, res) => {
+    try{
+        const userResponse = await UserService.findAll();
+        if(!userResponse.success){
+            return res.status(204).json(userResponse.content);
+        }
+        return res.status(200).json(userResponse.content);
+    } catch(error){
+        return res.status(500).json({
+            error: "Internal Server Error"
+        })
+    }
+};
+
+UserController.deleteByID = async (req, res) => {
+    const { _id } = req.body;
+    
+    if(!_id) {
+        return res.status(403).json({error: "Missing id."})
+    }
+    
+    try{
+        const userResponse = await UserService.deleteOneByID(_id);
+        if(!userResponse.success){
+            return res.status(404).json(userResponse.content);
+        }
+        return res.status(200).json(userResponse.content);
+
+    } catch(error){
         return res.status(500).json({
             error: "Internal Server Error"
         })

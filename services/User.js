@@ -20,7 +20,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
         serviceResponse = {
             success: false,
             content: {
-                message: "Some required fields are empty."
+                message: "Some required fields for User are empty."
             }
         }
 
@@ -46,7 +46,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
                 serviceResponse = {
                     success: false,
                     content: {
-                        message: "Some required fields are empty."
+                        message: "Some required fields for Consultant are empty."
                     }
                 }   
             }
@@ -59,7 +59,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
                 serviceResponse = {
                     success: false,
                     content: {
-                        message: "Some required fields are empty."
+                        message: "Some required fields for Entrepreneur are empty."
                     }
                 }   
             }
@@ -210,6 +210,60 @@ UserService.verifyLoginFields = ({ identifier, password }) => {
     }
 
     return serviceResponse;
-}
+};
+
+UserService.findAll = async () => {
+    let serviceResponse = {
+        success:true,
+        content:{}
+    }
+    
+    try{
+        const users = await UserModel.find();
+        console.log ("FOUND: " + users);
+        if (!users){
+            serviceResponse = {
+                success: false,
+                content: {
+                    error: "Could not find any users"
+                }
+            }
+        } else {
+            serviceResponse.content = {
+                users,
+                count: users.length
+            }
+        }
+        return serviceResponse;
+    }catch(error){
+        console.log("An error occurred" + error);
+        throw new Error("Internal Server Error");
+    }
+};
+
+UserService.deleteOneByID = async (_id) => {
+    let serviceResponse = {
+        success:true,
+        content:{
+            message: "User deleted"
+        }
+    }
+
+    try{
+        const userDeleted = await UserModel.findByIdAndDelete(_id).exec();
+        if (!userDeleted) {
+            serviceResponse = {
+                success: false, 
+                content: {
+                    error: "User could not be deleted"
+                }
+            }
+        }
+        return serviceResponse;
+    }catch(error){
+        console.log("An error occurred" + error);
+        throw new Error("Internal Server Error");
+    }
+};
 
 module.exports = UserService;
