@@ -5,6 +5,8 @@ const EntrepreneurController = require("../../controllers/api/Entrepreneur");
 
 router.get("/findAll", EntrepreneurController.findAll);
 
+router.put("/update", EntrepreneurController.updateEntrepreneur);
+
 router.delete("/deleteByID", EntrepreneurController.deleteByID);
 
 module.exports = router;
