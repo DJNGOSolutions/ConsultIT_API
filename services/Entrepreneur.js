@@ -132,9 +132,7 @@ EntrepreneurService.findAllBusinesses = async (_id) => {
                 }
             }
         }else{
-            serviceResponse.content = {
-                entrepreneur
-            }
+            serviceResponse.content = entrepreneur.businesses
         }
         return serviceResponse;
     }catch(error){
