@@ -7,9 +7,7 @@ ConsultantController.findAll = async(req, res) => {
     const { page = 0, limit = 10 } = req.query;
 
     if(!verifyTypeNumber(page, limit)){
-        return res.status(403).json({
-            error: "Mistype query."
-        });
+        return res.status(403).json({ error: "Mistype query." });
     }
     
     try{

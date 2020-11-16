@@ -1,13 +1,20 @@
 const EntrepreneurService = require('../../services/Entrepreneur');
-const { verifyID } = require('./../../utils/MongoUtils');
+const { verifyId } = require('./../../utils/MongoUtils');
 const UserService = require('../../services/User');
+const { verifyTypeNumber } = require('../../utils/MiscUtils');
 
 
 const EntrepreneurController = {};
 
 EntrepreneurController.findAll = async(req, res) => {
+    const { page = 0, limit = 10 } = req.query;
+    
+    if(!verifyTypeNumber(page, limit)){
+        return res.status(403).json({error: "Mistype query."});
+    }
+
     try{
-        const entrepreneurResponse = await EntrepreneurService.findAll();
+        const entrepreneurResponse = await EntrepreneurService.findAll(parseInt(page), parseInt(limit));
         if(!entrepreneurResponse.success){
             return res.status(204).json(entrepreneurResponse.content);
         }
@@ -73,7 +80,7 @@ EntrepreneurController.deleteByID = async (req, res) => {
 EntrepreneurController.updateEntrepreneur = async (req, res) => {
     const { _id } = req.body;
     
-    if (!verifyID(_id)) {
+    if (!verifyId(_id)) {
         return res.status(400).json({
             error: "Error in ID"
         });
@@ -85,14 +92,14 @@ EntrepreneurController.updateEntrepreneur = async (req, res) => {
     }
 
     try {
-        const entrepreneurExists = await EntrepreneurService.findOneEntrepreneurByUser(user)
+        const entrepreneurExists = await EntrepreneurService.findOneEntrepreneurByUser(_id);
 
         if (!entrepreneurExists.success) {
             return res.status(404).json(entrepreneurExists.content);
         }
 
-        const entrepreneurUpdated = await EntrepreneurService.updateEntrepreneurById(entrepreneurExists, req.body);
-
+        const entrepreneurUpdated = await EntrepreneurService.updateEntrepreneurById(entrepreneurExists.content, fieldsVerified.content);
+        
         if (!entrepreneurUpdated.success) {
             return res.status(409).json(entrepreneurUpdated.content);
         }
