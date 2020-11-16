@@ -1,10 +1,40 @@
 const EntrepreneurService = require('../../services/Entrepreneur');
-const { verifyId } = require('./../../utils/MongoUtils');
 const UserService = require('../../services/User');
+const { verifyId } = require('./../../utils/MongoUtils');
 const { verifyTypeNumber } = require('../../utils/MiscUtils');
-
+const BusinessService = require('../../services/Business');
 
 const EntrepreneurController = {};
+
+EntrepreneurController.findOneEntrepreneurByUser = async (req, res) => {
+    let { username } = req.body;
+
+    if(!username){
+        return res.status(403).json({
+            error: "Missing username."
+        })
+    }
+
+    const userFound = await UserService.findOneUsernameOrEmail(username, "");
+    if(!userFound.success){
+        return res.status(204).json(userFound.content);
+    }
+    
+    try{
+        const user = userFound.content.user;
+        const entrepreneurResponse = await EntrepreneurService.findOneEntrepreneurByUser(user._id);
+        if(!entrepreneurResponse.success){
+            return res.status(204).json(entrepreneurResponse.content);
+        }
+        return res.status(200).json(entrepreneurResponse.content);
+    }catch(error){
+        return res.status(500).json({
+            error: "Internal Server Error"
+        })
+    }
+
+
+};
 
 EntrepreneurController.findAll = async(req, res) => {
     const { page = 0, limit = 10 } = req.query;
@@ -19,6 +49,54 @@ EntrepreneurController.findAll = async(req, res) => {
             return res.status(204).json(entrepreneurResponse.content);
         }
         return res.status(200).json(entrepreneurResponse.content);
+    }catch(error){
+        return res.status(500).json({
+            error: "Internal Server Error"
+        })
+    }
+};
+
+EntrepreneurController.createNewBusiness_Entrepreneur = async(req, res) => {
+    let { username, legalName, comercialName, email, phoneNumber, address, state, city, businessLine, businessSector } = req.body;
+
+    if(!username){
+        return res.status(403).json({
+            error: "Missing username."
+        })
+    }
+
+    const userFound = await UserService.findOneUsernameOrEmail(username, "");
+    if(!userFound.success){
+        return res.status(204).json(userFound.content);
+    }
+    
+    try{
+        const user = userFound.content.user;
+        const entrepreneurResponse = await EntrepreneurService.findOneEntrepreneurByUser(user._id);
+        if(!entrepreneurResponse.success){
+            return res.status(204).json(entrepreneurResponse.content);
+        }
+        const entrepreneur = entrepreneurResponse.content;
+        console.log("CREATE con " + entrepreneur);
+        const owner = entrepreneur._id;
+        const businessesResponse = await BusinessService.createNewBusiness_Entrepreneur(legalName, comercialName, email, phoneNumber, address, state, city, businessLine, businessSector, owner);
+        if(!businessesResponse.success){
+            console.log("businessesResponse: " + businessesResponse);
+            return res.status(204).json(businessesResponse.content);
+        }
+        const business = businessesResponse.business;
+        console.log("1 "+ business)
+        const businesses = [...entrepreneur.businesses, business];
+        console.log("2 "+ businesses)
+        const businessesObj = {businesses: businesses}
+        console.log("Businesses es " + businessesObj);
+
+        const entrepreneurUpdated = await EntrepreneurService.updateEntrepreneurById(entrepreneur, businessesObj);
+        if (!entrepreneurUpdated.success) {
+            return res.status(409).json(entrepreneurUpdated.content);
+        }
+
+        return res.status(200).json(businessesResponse.content);
     }catch(error){
         return res.status(500).json({
             error: "Internal Server Error"
@@ -42,7 +120,6 @@ EntrepreneurController.findAllBusinesses = async(req, res) => {
 
     try{
         const user = userFound.content.user;
-        console.log("El usuario es " + user);
         const businessesResponse = await EntrepreneurService.findAllBusinesses(user._id);
         if(!businessesResponse.success){
             return res.status(204).json(businessesResponse.content);
@@ -110,6 +187,6 @@ EntrepreneurController.updateEntrepreneur = async (req, res) => {
             error: "Internal Server Error."
         })
     }
-}
+};
 
 module.exports = EntrepreneurController;
