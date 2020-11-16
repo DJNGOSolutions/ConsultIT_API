@@ -1,4 +1,3 @@
-const { Error } = require('mongoose');
 const EntrepreneurModel = require('../models/Entrepreneur');
 
 const EntrepreneurService = {};
@@ -23,14 +22,14 @@ EntrepreneurService.verifyCreateFields = (firstName, lastName, birthdate, phoneN
     return serviceResponse;
 };
 
-EntrepreneurService.findOneEntrepreneurByUser = async (user) => {
+EntrepreneurService.findOneEntrepreneurByUser = async (_id) => {
     let serviceResponse = {
         success: true,
         content: {}
     }
 
     try {
-        const entrepreneur = await EntrepreneurModel.findOne({user: user})
+        const entrepreneur = await EntrepreneurModel.findOne({ user: _id });
 
         if (!entrepreneur) {
             serviceResponse = {
@@ -202,9 +201,12 @@ EntrepreneurService.updateEntrepreneurById = async (entrepreneur, newEntrepreneu
     }
 
     try {
-        const updatedEntrepreneur = await EntrepreneurModel.findByIdAndUpdate(entrepreneur._id, {
-            ...newEntrepreneurData,
+        console.log(entrepreneur);
+        console.log(newEntrepreneurData);
+        Object.keys(newEntrepreneurData).forEach(key => {
+            entrepreneur[key] = newEntrepreneurData[key];
         });
+        const updatedEntrepreneur = await entrepreneur.save();
 
         if (!updatedEntrepreneur) {
             serviceResponse = {
@@ -214,11 +216,13 @@ EntrepreneurService.updateEntrepreneurById = async (entrepreneur, newEntrepreneu
                 }
             }
         } else {
+            console.log(updatedEntrepreneur);
             serviceResponse.content = updatedEntrepreneur;
         }
 
         return serviceResponse;
     } catch(error) {
+        console.log(error);
         throw new Error("Internal Server Error.")
     }
 }
