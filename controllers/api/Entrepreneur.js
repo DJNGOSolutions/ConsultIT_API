@@ -2,7 +2,6 @@ const EntrepreneurService = require('../../services/Entrepreneur');
 const UserService = require('../../services/User');
 const { verifyId } = require('./../../utils/MongoUtils');
 const { verifyTypeNumber } = require('../../utils/MiscUtils');
-const { use } = require('../../routes/api/Consultant');
 const BusinessService = require('../../services/Business');
 
 const EntrepreneurController = {};
@@ -82,10 +81,22 @@ EntrepreneurController.createNewBusiness_Entrepreneur = async(req, res) => {
         const owner = entrepreneur._id;
         const businessesResponse = await BusinessService.createNewBusiness_Entrepreneur(legalName, comercialName, email, phoneNumber, address, state, city, businessLine, businessSector, owner);
         if(!businessesResponse.success){
+            console.log("businessesResponse: " + businessesResponse);
             return res.status(204).json(businessesResponse.content);
         }
-        return res.status(200).json(businessesResponse.content);
+        const business = businessesResponse.business;
+        console.log("1 "+ business)
+        const businesses = [...entrepreneur.businesses, business];
+        console.log("2 "+ businesses)
+        const businessesObj = {businesses: businesses}
+        console.log("Businesses es " + businessesObj);
 
+        const entrepreneurUpdated = await EntrepreneurService.updateEntrepreneurById(entrepreneur, businessesObj);
+        if (!entrepreneurUpdated.success) {
+            return res.status(409).json(entrepreneurUpdated.content);
+        }
+
+        return res.status(200).json(businessesResponse.content);
     }catch(error){
         return res.status(500).json({
             error: "Internal Server Error"

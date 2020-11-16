@@ -88,6 +88,7 @@ BusinessService.createNewBusiness_Entrepreneur = async (legalName, comercialName
                 }
             }     
         }
+        serviceResponse.business = newBusiness;
         return serviceResponse;
     }catch(error){
         console.log("An error occurred" + error);
