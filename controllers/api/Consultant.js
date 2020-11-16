@@ -1,5 +1,6 @@
 const ConsultantService = require('../../services/Consultant');
 const { verifyTypeNumber } = require('../../utils/MiscUtils');
+const { verifyId } = require('../../utils/MongoUtils');
 
 const ConsultantController = {};
 
@@ -44,5 +45,40 @@ ConsultantController.deleteByID = async (req, res) => {
         });
     }
 };
+
+ConsultantController.updateConsultant = async (req, res) => {
+    const { _id } = req.body;
+
+    if (!verifyId(_id)) {
+        return res.status(400).json({
+            error: "Error in ID."
+        });
+    }
+
+    const fieldsVerified = ConsultantService.verifyUpdateFields(req.body);
+    if (!fieldsVerified.success) {
+        return res.status(400).json(fieldsVerified.content);
+    }
+
+    try {
+        const consultantExists = await ConsultantService.findOneConsultantByUser(_id);
+
+        if (!consultantExists.success) {
+            return res.status(404).json(consultantExists.content);
+        }
+
+        const consultantUpdated = await ConsultantService.updateConsultantById(consultantExists.content, fieldsVerified.content);
+
+        if (!consultantUpdated.success) {
+            return res.status(409).json(consultantUpdated.content);
+        }
+
+        return res.status(202).json(consultantUpdated.content);
+    } catch(error) {
+        return res.status(500).json({
+            error: "Internal Server Error."
+        });
+    }
+}
 
 module.exports = ConsultantController;
