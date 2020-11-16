@@ -47,6 +47,36 @@ BusinessService.createNewBusiness = async ({ legalName, comercialName, email, ph
 
     try{
         const newBusiness = new BusinessModel({legalName, comercialName, email, phoneNumber, address,state, city, businessLine, businessSector});
+
+        const savedBusiness = await newBusiness.save();
+        if (!savedBusiness) {
+            serviceResponse = {
+                success: false,
+                content: {
+                    error: "Business could not be registered"
+                }
+            }     
+        }
+        return serviceResponse;
+    }catch(error){
+        console.log("An error occurred" + error);
+        throw new Error("Internal Server Error");
+    }
+
+};
+
+BusinessService.createNewBusiness_Entrepreneur = async (legalName, comercialName, email, phoneNumber, address, state, city, businessLine, businessSector, owner) => {
+
+    let serviceResponse = {
+        success: true,
+        content: {
+            message: "A new Business with Entrepreneur has been registered"
+        }
+    }
+
+
+    try{
+        const newBusiness = new BusinessModel({legalName, comercialName, email, phoneNumber, address,state, city, businessLine, businessSector, owner});
         console.log("New Business Model: " + newBusiness);
 
         const savedBusiness = await newBusiness.save();
@@ -119,7 +149,7 @@ BusinessService.deleteOneByID = async (_id) => {
         console.log("An error occurred: " + error);
         throw new Error("Internal Server Error");
     }
-}
+};
 
 
 module.exports = BusinessService;
