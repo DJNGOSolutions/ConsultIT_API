@@ -71,12 +71,12 @@ EntrepreneurController.updateEntrepreneur = async (req, res) => {
     
     if (!verifyId(_id)) {
         return res.status(400).json({
-            error: "Error in ID"
+            error: "Error in ID."
         });
     }
 
     const fieldsVerified = EntrepreneurService.verifyUpdateFields(req.body);
-    if(!fieldsVerified.success) {
+    if (!fieldsVerified.success) {
         return res.status(400).json(fieldsVerified.content);
     }
 
