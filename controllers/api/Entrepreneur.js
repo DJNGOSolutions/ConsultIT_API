@@ -1,5 +1,5 @@
 const EntrepreneurService = require('../../services/Entrepreneur');
-const { verifyID } = require('./../../utils/MongoUtils');
+const { verifyId } = require('./../../utils/MongoUtils');
 const UserService = require('../../services/User');
 const { verifyTypeNumber } = require('../../utils/MiscUtils');
 
@@ -80,7 +80,7 @@ EntrepreneurController.deleteByID = async (req, res) => {
 EntrepreneurController.updateEntrepreneur = async (req, res) => {
     const { _id } = req.body;
     
-    if (!verifyID(_id)) {
+    if (!verifyId(_id)) {
         return res.status(400).json({
             error: "Error in ID"
         });
@@ -92,14 +92,14 @@ EntrepreneurController.updateEntrepreneur = async (req, res) => {
     }
 
     try {
-        const entrepreneurExists = await EntrepreneurService.findOneEntrepreneurByUser(user)
+        const entrepreneurExists = await EntrepreneurService.findOneEntrepreneurByUser(_id);
 
         if (!entrepreneurExists.success) {
             return res.status(404).json(entrepreneurExists.content);
         }
 
-        const entrepreneurUpdated = await EntrepreneurService.updateEntrepreneurById(entrepreneurExists, req.body);
-
+        const entrepreneurUpdated = await EntrepreneurService.updateEntrepreneurById(entrepreneurExists.content, fieldsVerified.content);
+        
         if (!entrepreneurUpdated.success) {
             return res.status(409).json(entrepreneurUpdated.content);
         }
