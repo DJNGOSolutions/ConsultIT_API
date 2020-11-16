@@ -201,8 +201,6 @@ EntrepreneurService.updateEntrepreneurById = async (entrepreneur, newEntrepreneu
     }
 
     try {
-        console.log(entrepreneur);
-        console.log(newEntrepreneurData);
         Object.keys(newEntrepreneurData).forEach(key => {
             entrepreneur[key] = newEntrepreneurData[key];
         });
@@ -216,13 +214,11 @@ EntrepreneurService.updateEntrepreneurById = async (entrepreneur, newEntrepreneu
                 }
             }
         } else {
-            console.log(updatedEntrepreneur);
             serviceResponse.content = updatedEntrepreneur;
         }
 
         return serviceResponse;
     } catch(error) {
-        console.log(error);
         throw new Error("Internal Server Error.")
     }
 }
