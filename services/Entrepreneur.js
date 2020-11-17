@@ -122,7 +122,10 @@ EntrepreneurService.findAllBusinesses = async (_id) => {
     }
     
     try{
-        const entrepreneur = await (await EntrepreneurModel.findOne({user: _id})).execPopulate("businesses");
+        const entrepreneura = await EntrepreneurModel.findOne({user: _id});
+        console.log("Entrepreneur A ->" + entrepreneura);
+        const entrepreneur = await entrepreneura.populate( 'businesses' ).execPopulate();
+        
         if(!entrepreneur){
             serviceResponse = {
                 success: false,
@@ -132,7 +135,7 @@ EntrepreneurService.findAllBusinesses = async (_id) => {
             }
         }else{
             const businesses = entrepreneur.businesses;
-            console.log("Entrepreneur ->" + entrepreneur);
+            console.log("Entrepreneur B ->" + entrepreneur);
             console.log("Businesses ->" + businesses);
             serviceResponse.content = {businesses: businesses};
         }
