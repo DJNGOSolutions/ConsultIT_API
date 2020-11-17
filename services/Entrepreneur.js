@@ -1,4 +1,5 @@
 const EntrepreneurModel = require('../models/Entrepreneur');
+const BusinessModel = require('../models/Business');
 
 const EntrepreneurService = {};
 
@@ -93,6 +94,7 @@ EntrepreneurService.findAll = async (page, limit) => {
             skip: page * limit,
             limit: limit,
         }).exec();
+
         if(!entrepreneurs){
             serviceResponse = {
                 success: false,
@@ -108,6 +110,7 @@ EntrepreneurService.findAll = async (page, limit) => {
                 limit   
             } 
         }
+
         return serviceResponse;
     }catch(error){
         console.log("An error occurred" + error);
@@ -122,9 +125,7 @@ EntrepreneurService.findAllBusinesses = async (_id) => {
     }
     
     try{
-        const entrepreneura = await EntrepreneurModel.findOne({user: _id});
-        console.log("Entrepreneur A ->" + entrepreneura);
-        const entrepreneur = await entrepreneura.populate( 'businesses' ).execPopulate();
+        const entrepreneur = await EntrepreneurModel.findOne({user: _id});
         
         if(!entrepreneur){
             serviceResponse = {
@@ -134,9 +135,10 @@ EntrepreneurService.findAllBusinesses = async (_id) => {
                 }
             }
         }else{
-            const businesses = entrepreneur.businesses;
-            console.log("Entrepreneur B ->" + entrepreneur);
+            const businesses = await BusinessModel.find({_id:{ $in: entrepreneur.businesses }});
+            console.log("Entrepreneur ->" + entrepreneur);
             console.log("Businesses ->" + businesses);
+
             serviceResponse.content = {businesses: businesses};
         }
         return serviceResponse;
