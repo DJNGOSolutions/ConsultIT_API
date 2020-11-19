@@ -8,7 +8,7 @@ const emailRegex = new RegExp("^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA
 const UserService = {};
 
 //Sing up service
-UserService.verifyRegistrationFields = ({ username, email, password, type,  firstName, lastName, birthdate, phoneNumber, postalAddress, state, city, referencePrice, historicAveragePrice, consultantType}) => {
+UserService.verifyRegistrationFields = ({ username, email, password, type,  firstName, lastName, birthdate, degree, phoneNumber, postalAddress, state, city, referencePrice, historicAveragePrice, consultantType}) => {
     let serviceResponse = {
         success: true,
         content: {
@@ -40,7 +40,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
     
     switch (type) {
         case "consultant":
-            const ConsultantValidation = ConsultantService.verifyCreateFields(firstName, lastName, birthdate, referencePrice, historicAveragePrice, phoneNumber, consultantType, state, city);
+            const ConsultantValidation = ConsultantService.verifyCreateFields(firstName, lastName, birthdate, degree, referencePrice, historicAveragePrice, phoneNumber, consultantType, state, city);
             
             if (!ConsultantValidation.success){
                 serviceResponse = {
@@ -115,7 +115,7 @@ UserService.findOneUsernameOrEmail = async (username, email) => {
 }
 
 //Sign up service
-UserService.register = async ({ username, email, password, type,  firstName, lastName, photo, birthdate, phoneNumber, postalAddress, state, city, referencePrice, historicAveragePrice, consultantType, averageRating }) => {
+UserService.register = async ({ username, email, password, type,  firstName, lastName, photo, birthdate, degree, phoneNumber, postalAddress, state, city, referencePrice, historicAveragePrice, consultantType, averageRating }) => {
 
     let serviceResponse = {
         success: true,
@@ -146,7 +146,7 @@ UserService.register = async ({ username, email, password, type,  firstName, las
         
         switch(type) {
             case "consultant":
-                const newConsultant =  await ConsultantService.createNewConsultant(userSaved, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city);
+                const newConsultant =  await ConsultantService.createNewConsultant(userSaved, firstName, lastName, photo, birthdate, degree, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city);
 
                 if (!newConsultant.success){
                     serviceResponse = {

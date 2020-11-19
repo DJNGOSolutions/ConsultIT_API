@@ -22,6 +22,10 @@ const ConsultantSchema = new Schema({
         type: Date,
         required: true
     },
+    degree: {
+        type: String,
+        required: true
+    },
     referencePrice: {
         type: Number,
         required: true
