@@ -4,7 +4,7 @@ const debug = require("debug")("log");
 
 const ConsultantService = {};
 
-ConsultantService.verifyCreateFields = (firstName, lastName, birthdate, referencePrice, historicAveragePrice, phoneNumber, consultantType, state, city) => {
+ConsultantService.verifyCreateFields = (firstName, lastName, birthdate, degree, referencePrice, historicAveragePrice, phoneNumber, consultantType, state, city) => {
     let serviceRespone = {
         success: true,
         content: {
@@ -12,7 +12,7 @@ ConsultantService.verifyCreateFields = (firstName, lastName, birthdate, referenc
         }
     }
     
-    if(!firstName || !lastName || !birthdate || !referencePrice || !historicAveragePrice || !phoneNumber || !consultantType || !state || !city){
+    if(!firstName || !lastName || !degree || !birthdate || !referencePrice || !historicAveragePrice || !phoneNumber || !consultantType || !state || !city){
         serviceRespone = {
             success: false, 
             content:{
@@ -50,7 +50,7 @@ ConsultantService.findOneConsultantByUser = async (_id) => {
     }
 }
 
-ConsultantService.createNewConsultant = async (user, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city) => {
+ConsultantService.createNewConsultant = async (user, firstName, lastName, photo, birthdate, degree, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city) => {
     let serviceRespone = {
         success: true, 
         content: {
@@ -59,7 +59,7 @@ ConsultantService.createNewConsultant = async (user, firstName, lastName, photo,
     }
     
     try{
-        const newConsultant = new ConsultantModel({user, firstName, lastName, photo, birthdate, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city});
+        const newConsultant = new ConsultantModel({user, firstName, lastName, photo, birthdate, degree, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city});
         
         const savedConsultant = await newConsultant.save();
         if(!savedConsultant) {
@@ -137,13 +137,13 @@ ConsultantService.deleteOneByID = async (_id) => {
     }
 };
 
-ConsultantService.verifyUpdateFields = ({firstName, lastName, photo, birthdate, referencePrice, phoneNumber, consultantType, state, city }) => {
+ConsultantService.verifyUpdateFields = ({firstName, lastName, photo, birthdate, degree, referencePrice, phoneNumber, consultantType, state, city }) => {
     let serviceResponse = {
         success: true,
         content: {}
     }
 
-    if(!firstName && !lastName && !photo && !birthdate && !referencePrice && !phoneNumber && !consultantType && !state && !city) {
+    if(!firstName && !lastName && !photo && !birthdate && !degree && !referencePrice && !phoneNumber && !consultantType && !state && !city) {
         serviceResponse = {
             success: false,
             content: {
@@ -158,6 +158,7 @@ ConsultantService.verifyUpdateFields = ({firstName, lastName, photo, birthdate, 
     if(lastName) serviceResponse.content.lastName = lastName;
     if(photo) serviceResponse.content.photo = photo;
     if(birthdate) serviceResponse.content.birthdate = birthdate;
+    if(degree) serviceResponse.content.degree = degree;
     if(referencePrice) serviceResponse.content.referencePrice = referencePrice;
     if(phoneNumber) serviceResponse.content.phoneNumber = phoneNumber;
     if(consultantType) serviceResponse.content.consultantType = consultantType;

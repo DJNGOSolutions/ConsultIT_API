@@ -102,7 +102,7 @@ ConsultantController.updateConsultant = async (req, res) => {
             return res.status(409).json(consultantUpdated.content);
         }
 
-        return res.status(202).json(consultantUpdated.content);
+        return res.status(200).json(consultantUpdated.content);
     } catch(error) {
         return res.status(500).json({
             error: "Internal Server Error."

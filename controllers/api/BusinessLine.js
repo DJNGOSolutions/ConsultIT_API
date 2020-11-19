@@ -17,7 +17,7 @@ BusinessLineController.create = async (req, res) => {
             return res.status(409).json(businessLineWasCreated.content);
         }
 
-        return res.status(201).json(businessLineWasCreated.content);
+        return res.status(200).json(businessLineWasCreated.content);
     } catch(error) {
         throw new Error("Internal Server Error.");
     }

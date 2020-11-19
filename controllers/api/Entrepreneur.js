@@ -181,7 +181,7 @@ EntrepreneurController.updateEntrepreneur = async (req, res) => {
             return res.status(409).json(entrepreneurUpdated.content);
         }
 
-        return res.status(202).json(entrepreneurUpdated.content);
+        return res.status(200).json(entrepreneurUpdated.content);
     } catch (error) {
         return res.status(500).json({
             error: "Internal Server Error."

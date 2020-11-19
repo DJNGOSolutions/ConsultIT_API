@@ -28,7 +28,7 @@ UserController.register = async(req, res) => {
             return res.status(409).json(UserRegistrated.content);
         }
 
-        return res.status(201).json(UserRegistrated.content);
+        return res.status(200).json(UserRegistrated.content);
     } catch(error) {
         return res.status(500).json({
             error: "Internal Server Error"

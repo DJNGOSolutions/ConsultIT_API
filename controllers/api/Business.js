@@ -18,7 +18,7 @@ BusinessController.create = async (req, res) => {
         if(!createBusiness.success){
             return res.status(409).json(createBusiness.content);
         }
-        res.status(201).json(createBusiness.content);
+        res.status(200).json(createBusiness.content);
     }catch(error){
         return res.status(500).json({
             error: "Internal Server Error"
