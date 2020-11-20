@@ -18,7 +18,7 @@ BusinessService.verifyCreateFields = ({ legalName, comercialName, email, phoneNu
     let serviceResponse = {
         success: true,
         content: {
-            message: "Fields OK"
+            message: "Los campos son correctos"
         }
     }
 
@@ -26,7 +26,7 @@ BusinessService.verifyCreateFields = ({ legalName, comercialName, email, phoneNu
         serviceResponse={
             success: false,
             content:{
-                error: "A required field was not provided"
+                error: "Un o más campos necesarios no fueron proporcionados"
             }
         }
     }
@@ -40,7 +40,7 @@ BusinessService.createNewBusiness = async ({ legalName, comercialName, email, ph
     let serviceResponse = {
         success: true,
         content: {
-            message: "A new Business has been registered"
+            message: "Se ha registrado un nuevo Negocio"
         }
     }
 
@@ -53,7 +53,7 @@ BusinessService.createNewBusiness = async ({ legalName, comercialName, email, ph
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Business could not be registered"
+                    error: "El Negocio no pudo ser registrado"
                 }
             }     
         }
@@ -70,7 +70,7 @@ BusinessService.createNewBusiness_Entrepreneur = async (legalName, comercialName
     let serviceResponse = {
         success: true,
         content: {
-            message: "A new Business with Entrepreneur has been registered"
+            message: "Se ha creado un nuevo Negocio con un Emprendedor asociado"
         }
     }
 
@@ -84,7 +84,7 @@ BusinessService.createNewBusiness_Entrepreneur = async (legalName, comercialName
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Business could not be registered"
+                    error: "El negocio no pudo ser registrado"
                 }
             }     
         }
@@ -110,7 +110,7 @@ BusinessService.findAll = async () => {
             serviceResponse = {
                 success: false, 
                 content: {
-                    error: "Could not find any business"
+                    error: "No se encontró ningún Negocio"
                 }
             }         
         } else {
@@ -131,7 +131,7 @@ BusinessService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "Business deleted"
+            message: "Se ha borrado el Negocio"
         }
     }
     
@@ -141,7 +141,7 @@ BusinessService.deleteOneByID = async (_id) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Business could not be deleted"
+                    error: "No se pudo borrar el Negocio"
                 }
             }
         }
@@ -151,6 +151,5 @@ BusinessService.deleteOneByID = async (_id) => {
         throw new Error("Internal Server Error");
     }
 };
-
 
 module.exports = BusinessService;

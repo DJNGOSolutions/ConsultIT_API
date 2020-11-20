@@ -8,7 +8,7 @@ ConsultantService.verifyCreateFields = (firstName, lastName, birthdate, degree, 
     let serviceRespone = {
         success: true,
         content: {
-            message: "Fields OK"
+            message: "Los campos son correctos"
         }
     }
     
@@ -16,7 +16,7 @@ ConsultantService.verifyCreateFields = (firstName, lastName, birthdate, degree, 
         serviceRespone = {
             success: false, 
             content:{
-                error: "A required field was not provided"
+                error: "Un o más campos necesarios no fueron proporcionados"
             }
         }
     }
@@ -27,7 +27,9 @@ ConsultantService.verifyCreateFields = (firstName, lastName, birthdate, degree, 
 ConsultantService.findOneConsultantByUser = async (_id) => {
     let serviceRespone = {
         success: true,
-        content: {}
+        content: {
+            message: "El Consultor fue encontrado"
+        }
     }
 
     try{
@@ -37,7 +39,7 @@ ConsultantService.findOneConsultantByUser = async (_id) => {
             serviceRespone = {
                 success: false,
                 content: {
-                    error: "User not found."
+                    error: "El Consultor no se encontró"
                 }
             }
         } else {
@@ -54,7 +56,7 @@ ConsultantService.createNewConsultant = async (user, firstName, lastName, photo,
     let serviceRespone = {
         success: true, 
         content: {
-            message: "A new Consultant has been registered"
+            message: "Se ha registrado un nuevo Consultor"
         }
     }
     
@@ -66,7 +68,7 @@ ConsultantService.createNewConsultant = async (user, firstName, lastName, photo,
             serviceRespone = {
                 success: false, 
                 content: {
-                    error: "Consultant could not be registered"
+                    error: "El Consultor no pudo ser registrado"
                 }
             }
         }
@@ -94,7 +96,7 @@ ConsultantService.findAll = async (page, limit) => {
             serviceResponse = {
                 success: false,
                 content:{
-                error: "Could not find any consultants"
+                error: "No se encontró ningún Consultor"
                 }
             }
         } else {
@@ -116,7 +118,7 @@ ConsultantService.deleteOneByID = async (_id) => {
     let serviceRespone = {
         success: true,
         content: {
-            message: "Consultant deleted!"
+            message: "Se ha borrado el Consultor"
         }
     }
     
@@ -126,7 +128,7 @@ ConsultantService.deleteOneByID = async (_id) => {
             serviceRespone = {
                 success: false,
                 content: {
-                    error: "Consultant could not be deleted"
+                    error: "No se pudo borrar el Consultor"
                 }
             }
         }
@@ -147,7 +149,7 @@ ConsultantService.verifyUpdateFields = ({firstName, lastName, photo, birthdate, 
         serviceResponse = {
             success: false,
             content: {
-                error: "No fields to change."
+                error: "No se especifico ningún campo para actualizar"
             }
         }
 
@@ -171,7 +173,9 @@ ConsultantService.verifyUpdateFields = ({firstName, lastName, photo, birthdate, 
 ConsultantService.updateConsultantById = async (consultant, newConsultantData) => {
     let serviceResponse = {
         success: true,
-        content: {}
+        content: {
+            message: "El Consultor se ha actualizado"
+        }
     }
 
     try {
@@ -184,7 +188,7 @@ ConsultantService.updateConsultantById = async (consultant, newConsultantData) =
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Consultant was not updated."
+                    error: "El Consultor no se pudo actualizar"
                 }
             }
         } else {

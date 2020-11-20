@@ -7,7 +7,7 @@ CityService.createNewCity = async ({ name }) => {
     let serviceResponse = {
         success: true,
         content: {
-            message: "City was stored correctly."
+            message: "Se ha registrado una nueva Ciudad"
         }
     }
 
@@ -15,7 +15,7 @@ CityService.createNewCity = async ({ name }) => {
         serviceResponse = {
             success: false,
             content: {
-                error: "City name field was empty."
+                error: "El campo de nombre no fue proporcionado"
             }
         }
 
@@ -29,7 +29,7 @@ CityService.createNewCity = async ({ name }) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "City could not be registrated."
+                    error: "La Ciudad no pudo ser registrada"
                 }
             }
             
@@ -75,7 +75,7 @@ CityService.deleteOneById = async (_id) => {
     let serviceResponse = {
         success: true,
         content: {
-            message: "City was deleted."
+            message: "Se ha borrado la Ciudad"
         }
     }
 
@@ -83,7 +83,7 @@ CityService.deleteOneById = async (_id) => {
         serviceResponse = {
             success: false,
             content: {
-                error: "Missing id."
+                error: "El campo _id no fue proporcionado"
             }
         }
 
@@ -96,7 +96,7 @@ CityService.deleteOneById = async (_id) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "City could not be deleted."
+                    error: "No se pudo borrar la Ciudad"
                 }
             }
 

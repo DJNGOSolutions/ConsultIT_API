@@ -7,7 +7,7 @@ StateService.createNewState = async ({ name }) => {
     let serviceResponse = {
         success: true,
         content: {
-            message: "State was saved correctly."
+            message: "Se ha registrado un nuevo Estado"
         }
     }
 
@@ -15,7 +15,7 @@ StateService.createNewState = async ({ name }) => {
         serviceResponse = {
             success: false,
             content: {
-                error: "Name field was empty."
+                error: "El campo de nombre no fue proporcionado"
             }
         }
 
@@ -30,7 +30,7 @@ StateService.createNewState = async ({ name }) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    message: "State could not be saved."
+                    message: "El Estado no puedo ser registrado"
                 }
             }
 
@@ -63,7 +63,7 @@ StateService.findAllStates = async (page, limit) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "States were not found."
+                    error: "No se encontró ningún Estado"
                 }
             }
 
@@ -87,14 +87,14 @@ StateService.deleteOneById = async (_id) => {
     let serviceResponse = {
         success: true,
         content: {
-            message: "State was deleted."
+            message: "Se ha borrado el Estado"
         }
     }
     if(!_id){
         serviceResponse = {
             success: false,
             content: {
-                error: "Missing id."
+                error: "El campo _id no fue proporcionado"
             }
         }
 
@@ -107,7 +107,7 @@ StateService.deleteOneById = async (_id) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "State could not be deleted."
+                    error: "No se pudo borrar el Estado"
                 }
             }
 

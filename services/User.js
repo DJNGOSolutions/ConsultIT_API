@@ -12,7 +12,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
     let serviceResponse = {
         success: true,
         content: {
-            message: "Fields OK"
+            message: "Los campos son correctos"
         }
     }
     
@@ -20,7 +20,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
         serviceResponse = {
             success: false,
             content: {
-                message: "Some required fields for User are empty."
+                error: "Un o más campos necesarios para crear un Usuario no fueron proporcionados"
             }
         }
 
@@ -31,7 +31,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
         serviceResponse = {
             success: false,
             content: {
-                message: "Wrong format for email."
+                message: "Formato incorrecto para el campo email"
             }
         }
 
@@ -46,7 +46,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
                 serviceResponse = {
                     success: false,
                     content: {
-                        message: "Some required fields for Consultant are empty."
+                        error: "Un o más campos necesarios para crear un Consultor no fueron proporcionados"
                     }
                 }   
             }
@@ -59,7 +59,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
                 serviceResponse = {
                     success: false,
                     content: {
-                        message: "Some required fields for Entrepreneur are empty."
+                        error: "Un o más campos necesarios para crear un Emprendedor no fueron proporcionados"
                     }
                 }   
             }
@@ -68,7 +68,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
             serviceResponse = {
                 success: false,
                 content: {
-                    message: "Wrong type for user."
+                    message: "Tipo de usuario equivocado"
                 }
             }
             break;
@@ -81,9 +81,7 @@ UserService.verifyRegistrationFields = ({ username, email, password, type,  firs
 UserService.findOneUsernameOrEmail = async (username, email) => {
     let serviceResponse = {
         success: true,
-        content: {
-            message: "User found."
-        }
+        content: {}
     }
 
     try {
@@ -95,14 +93,14 @@ UserService.findOneUsernameOrEmail = async (username, email) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    message: "User not found"
+                    message: "El User no se encontró"
                 }
             }
         } else {
             serviceResponse = {
                 success: true,
                 content: {
-                    message: "User found",
+                    message: "El Usuario fue encontrado",
                     user
                 }
             }
@@ -120,7 +118,7 @@ UserService.register = async ({ username, email, password, type,  firstName, las
     let serviceResponse = {
         success: true,
         content: {
-            message: "User registrated."
+            message: "El Usuario fue registrado"
         }
     }
 
@@ -139,7 +137,7 @@ UserService.register = async ({ username, email, password, type,  firstName, las
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "User could not be registered"
+                    error: "El Usuario no pudo ser registrado"
                 }
             }
         }
@@ -152,7 +150,7 @@ UserService.register = async ({ username, email, password, type,  firstName, las
                     serviceResponse = {
                         success: false,
                         content: {
-                            message: "Consultant could not be registered"
+                            error: "El Consultor no pudo ser registrado"
                         }
                     }   
                 }
@@ -166,7 +164,7 @@ UserService.register = async ({ username, email, password, type,  firstName, las
                     serviceResponse = {
                         success: false,
                         content: {
-                            message: "Entrepreneur could not be registered"
+                            error: "El Emprendedor no pudo ser registrado"
                         }
                     }   
                 }
@@ -176,7 +174,7 @@ UserService.register = async ({ username, email, password, type,  firstName, las
                 serviceResponse = {
                     success: false,
                     content: {
-                        message: "Wrong type for user."
+                        message: "Tipo de usuario equivocado"
                     }
                 }   
                 break;
@@ -194,7 +192,7 @@ UserService.verifyLoginFields = ({ identifier, password }) => {
     let serviceResponse = {
         success: true,
         content: {
-            message: "User found."
+            message: "El Usuario fue encontrado"
         }
     }
 
@@ -202,7 +200,7 @@ UserService.verifyLoginFields = ({ identifier, password }) => {
         serviceResponse = {
             success: false,
             content: {
-                message: "Some fields are empty."
+                error: "Un o más campos necesarios no fueron proporcionados"
             }
         }
 
@@ -225,7 +223,7 @@ UserService.findAll = async () => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Could not find any users"
+                    error: "No se pudo encontrar ningún Usuario"
                 }
             }
         } else {
@@ -245,7 +243,7 @@ UserService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success:true,
         content:{
-            message: "User deleted"
+            message: "Se ha borrado el Usuario"
         }
     }
 
@@ -255,7 +253,7 @@ UserService.deleteOneByID = async (_id) => {
             serviceResponse = {
                 success: false, 
                 content: {
-                    error: "User could not be deleted"
+                    error: "No se pudo borrar el Usuario"
                 }
             }
         }
