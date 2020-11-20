@@ -7,7 +7,7 @@ EntrepreneurService.verifyCreateFields = (firstName, lastName, birthdate, phoneN
     let serviceResponse = {
         success: true,
         content: {
-            message: "Fields OK"
+            message: "Los campos son correctos"
         }
     }
     
@@ -15,7 +15,7 @@ EntrepreneurService.verifyCreateFields = (firstName, lastName, birthdate, phoneN
         serviceResponse = {
             success: false,
             content: {
-                message: "A required field was not provided"
+                error: "Un o más campos necesarios no fueron proporcionados"
             }
         }
     }
@@ -26,7 +26,9 @@ EntrepreneurService.verifyCreateFields = (firstName, lastName, birthdate, phoneN
 EntrepreneurService.findOneEntrepreneurByUser = async (_id) => {
     let serviceResponse = {
         success: true,
-        content: {}
+        content: {
+            message: "El Emprendedor fue encontrado"
+        }
     }
 
     try {
@@ -36,7 +38,7 @@ EntrepreneurService.findOneEntrepreneurByUser = async (_id) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "User not found."
+                    error: "El Emprendedor no se encontró"
                 }
             }
         } else {
@@ -53,7 +55,7 @@ EntrepreneurService.createNewEntrepreneur = async (user, firstName, lastName, ph
     let serviceResponse = {
         success: true,
         content: {
-            message: "A new Entrepreneur has been registered"
+            message: "Se ha registrado un nuevo Emprendedor"
         }
     }
     
@@ -72,7 +74,7 @@ EntrepreneurService.createNewEntrepreneur = async (user, firstName, lastName, ph
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Business could not be registered"
+                    error: "El Emprendedor no pudo ser registrado"
                 }
             }
         }
@@ -99,7 +101,7 @@ EntrepreneurService.findAll = async (page, limit) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Could not find any entrepreneurs"
+                    error: "No se encontró ningún Emprendedor"
                 }
             }
         }else{
@@ -131,7 +133,7 @@ EntrepreneurService.findAllBusinesses = async (_id) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Could not find this entrepreneur"
+                    error: "No se pudo encontrar ese Emprededor(a)"
                 }
             }
         }else{
@@ -152,7 +154,7 @@ EntrepreneurService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success: true,
         content: {
-            message: "Entrepreneur deleted!"
+            message: "Se ha borrado el Emprendedor"
         }
     }
     
@@ -162,7 +164,7 @@ EntrepreneurService.deleteOneByID = async (_id) => {
             serviceResponse = {
                 success: false, 
                 content: {
-                    error: "Entrepreneur could not be deleted"
+                    error: "No se pudo borrar el Emprendedor"
                 }
             }
         }
@@ -183,7 +185,7 @@ EntrepreneurService.verifyUpdateFields = ({ firstName, lastName, photo, birthdat
         serviceResponse = {
             success: false,
             content: {
-                error: "No fields to change."
+                error: "No se especifico ningún campo para actualizar"
             }
         }
 
@@ -205,7 +207,9 @@ EntrepreneurService.verifyUpdateFields = ({ firstName, lastName, photo, birthdat
 EntrepreneurService.updateEntrepreneurById = async (entrepreneur, newEntrepreneurData) => {
     let serviceResponse = {
         success: true,
-        content: {}
+        content: {
+            message: "El Emprendedor se ha actualizado"
+        }
     }
 
     try {
@@ -218,7 +222,7 @@ EntrepreneurService.updateEntrepreneurById = async (entrepreneur, newEntrepreneu
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Entrepreneur was not updated."
+                    error: "El Emprendedor no se pudo actualizar"
                 }
             }
         } else {

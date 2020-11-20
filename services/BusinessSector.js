@@ -7,7 +7,7 @@ BusinessSectorService.verifyCreateFields = ({ name }) => {
     let serviceResponse = {
         success: true,
         content: {
-            message: "Fields OK"
+            message: "Los campos son correctos"
         }
     }
     
@@ -15,7 +15,7 @@ BusinessSectorService.verifyCreateFields = ({ name }) => {
         serviceResponse={
             success: false,
             content: {
-                error: "A required field was not provided"
+                error: "Un o más campos necesarios no fueron proporcionados"
             }
         }
     }
@@ -27,7 +27,7 @@ BusinessSectorService.createNewBusinessSector = async ({ name }) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "A new Business Sector has been registered"
+            message: "Se ha registrado un nuevo Sector de Negocio"
         }
     }
 
@@ -40,7 +40,7 @@ BusinessSectorService.createNewBusinessSector = async ({ name }) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Business sector could not be registered"
+                    error: "El Sector de Negocio no pudo ser registrado"
                 }
             }
         }
@@ -65,7 +65,7 @@ BusinessSectorService.findAll = async () => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Could not find any business sectors"
+                    error: "No se encontró ningún Sector de Negocio"
                 }
             }
         } else {
@@ -87,7 +87,7 @@ BusinessSectorService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "Business sector deleted!"
+            message: "Se ha borrado el Sector de Negocio"
         }
     }
     
@@ -97,7 +97,7 @@ BusinessSectorService.deleteOneByID = async (_id) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Business sector could not be deleted"
+                    error: "No se pudo borrar el Sector de Negocio"
                 }
             }
         }

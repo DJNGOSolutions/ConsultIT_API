@@ -7,7 +7,7 @@ ConsultantTypeService.verifyCreateFields = ({ name }) => {
     let serviceResponse = {
         success: true,
         content: {
-            message: "Fields OK"
+            message: "Los campos son correctos"
         }
     }
     
@@ -15,7 +15,7 @@ ConsultantTypeService.verifyCreateFields = ({ name }) => {
         serviceResponse={
             success: false,
             content: {
-                error: "A required field was not provided"
+                error: "Un o más campos necesarios no fueron proporcionados"
             }
         }
     }
@@ -27,7 +27,7 @@ ConsultantTypeService.createNewConsultantType = async ({ name }) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "A new Consultant Type has been registered"
+            message: "Se ha registrado un nuevo Tipo de Consultor"
         }
     }
 
@@ -40,7 +40,7 @@ ConsultantTypeService.createNewConsultantType = async ({ name }) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Consultant Type not be registered"
+                    error: "El Tipo de Consultor no pudo ser registrado"
                 }
             }
         }
@@ -65,7 +65,7 @@ ConsultantTypeService.findAll = async () => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Could not find any Consultant Type"
+                    error: "No se encontró ningún Tipo de Consultor"
                 }
             }
         } else {
@@ -87,7 +87,7 @@ ConsultantTypeService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success: true, 
         content: {
-            message: "Consultant type deleted!"
+            message: "Se ha borrado el Tipo de Consultor"
         }
     }
     
@@ -97,7 +97,7 @@ ConsultantTypeService.deleteOneByID = async (_id) => {
             serviceResponse = {
                 success: false,
                 content: {
-                    error: "Consultant type could not be deleted"
+                    error: "No se pudo borrar el Tipo de Consultor"
                 }
             }
         }
