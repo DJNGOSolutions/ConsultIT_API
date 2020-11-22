@@ -7,7 +7,7 @@ const BusinessService = require('../../services/Business');
 const EntrepreneurController = {};
 
 EntrepreneurController.findOneEntrepreneurByUser = async (req, res) => {
-    let { username } = req.body;
+    let { username } = req.query;
 
     if(!username){
         return res.status(403).json({
@@ -105,7 +105,7 @@ EntrepreneurController.createNewBusiness_Entrepreneur = async(req, res) => {
 };
 
 EntrepreneurController.findAllBusinesses = async(req, res) => {
-    let { username } = req.body;
+    let { username } = req.query;
 
     if(!username){
         return res.status(403).json({
