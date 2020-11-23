@@ -53,7 +53,7 @@ ConsultantService.findOneConsultantByUser = async (_id) => {
     } catch(error) {
         throw new Error("Internal Server Error.");
     }
-}
+};
 
 ConsultantService.createNewConsultant = async (user, firstName, lastName, photo, birthdate, degree, referencePrice, historicAveragePrice, phoneNumber, averageRating, consultantType, state, city) => {
     let serviceRespone = {

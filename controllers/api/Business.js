@@ -62,4 +62,39 @@ BusinessController.deleteByID = async (req, res) => {
     }
 };
 
+BusinessController.updateBusiness = async (req, res) => {
+    const { _id } = req.body;
+    
+    if (!verifyId(_id)) {
+        return res.status(400).json({
+            error: "Error in ID."
+        });
+    }
+    
+    const fieldsVerified = BusinessService.verifyUpdateFields(req.body);
+    if(!fieldsVerified.success) {
+        return res.status(400).json(fieldsVerified.content);
+    }
+    
+    try{
+        const businessExists = await BusinessService.findOneBusinessByUser(_id); 
+        
+        if (!businessExists.success){
+            return res.status(404).json(businessExists.content);
+        }
+        
+        const businessUpdated = await BusinessService.updateConsultantById(businessExists.content, fieldsVerified.content);
+        
+        if (!businessUpdated.success) {
+            return res.status(409).json(businessUpdated.content);
+        }
+
+        return res.status(200).json(businessUpdated.content);
+    } catch(error) {
+        return res.status(500).json({
+            error: "Internal Server Error."
+        });
+    }
+};
+
 module.exports = BusinessController;
