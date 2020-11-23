@@ -6,7 +6,7 @@ const { verifyId } = require('../../utils/MongoUtils');
 const ConsultantController = {};
 
 ConsultantController.findOneConsultantByUser = async (req, res) => {
-    let { username } = req.body;
+    let { username } = req.query;
 
     if(!username){
         return res.status(403).json({
