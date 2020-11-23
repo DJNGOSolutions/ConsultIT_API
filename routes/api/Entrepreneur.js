@@ -11,6 +11,7 @@ router.get("/findAllBusinesses", EntrepreneurController.findAllBusinesses);
 
 router.put("/update", EntrepreneurController.updateEntrepreneur);
 
+router.delete("/deleteOneBusiness", EntrepreneurController.deleteOneBusiness);
 router.delete("/deleteByID", EntrepreneurController.deleteByID);
 
 module.exports = router;

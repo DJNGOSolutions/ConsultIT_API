@@ -77,19 +77,14 @@ EntrepreneurController.createNewBusiness_Entrepreneur = async(req, res) => {
             return res.status(204).json(entrepreneurResponse.content);
         }
         const entrepreneur = entrepreneurResponse.content;
-        console.log("CREATE con " + entrepreneur);
         const owner = entrepreneur._id;
         const businessesResponse = await BusinessService.createNewBusiness_Entrepreneur(legalName, comercialName, email, phoneNumber, address, state, city, businessLine, businessSector, owner);
         if(!businessesResponse.success){
-            console.log("businessesResponse: " + businessesResponse);
             return res.status(204).json(businessesResponse.content);
         }
         const business = businessesResponse.business;
-        console.log("1 "+ business)
         const businesses = [...entrepreneur.businesses, business];
-        console.log("2 "+ businesses)
         const businessesObj = {businesses: businesses}
-        console.log("Businesses es " + businessesObj);
 
         const entrepreneurUpdated = await EntrepreneurService.updateEntrepreneurById(entrepreneur, businessesObj);
         if (!entrepreneurUpdated.success) {
@@ -130,6 +125,60 @@ EntrepreneurController.findAllBusinesses = async(req, res) => {
             error: "Internal Server Error"
         })
     }
+};
+
+EntrepreneurController.deleteOneBusiness = async (req, res) => {
+    let { username, business_id } = req.body;
+
+    if(!username){
+        return res.status(403).json({
+            error: "Falta el Username"
+        })
+    }
+
+    if(!business_id){
+        return res.status(403).json({
+            error: "Falta el Id del Negocio"
+        })
+    }
+
+    const userFound = await UserService.findOneUsernameOrEmail(username, "");
+    if(!userFound.success){
+        return res.status(204).json(userFound.content);
+    }
+    
+    try{
+        const user = userFound.content.user;
+        const entrepreneurResponse = await EntrepreneurService.findOneEntrepreneurByUser(user._id);
+        if(!entrepreneurResponse.success){
+            return res.status(204).json(entrepreneurResponse.content);
+        }    
+        const entrepreneur = entrepreneurResponse.content;
+        const businessResponse = await BusinessService.deleteOneByID(business_id);
+        if(!businessResponse.success){
+            return res.status(204).json(businessesResponse.content);
+        }
+        const businesses = entrepreneur.businesses;
+
+        const index = businesses.indexOf(business_id);
+        if (index > -1) {
+            businesses.splice(index, 1);
+        }
+        const businessesObj = {businesses: businesses};
+        
+        const entrepreneurUpdated = await EntrepreneurService.updateEntrepreneurById(entrepreneur, businessesObj);
+        if (!entrepreneurUpdated.success) {
+            return res.status(409).json(entrepreneurUpdated.content);
+        }
+
+        return res.status(200).json(businessResponse.content);
+    }catch(error){
+        return res.status(500).json({
+            error: "Internal Server Error"
+        })
+    }
+
+    
 };
 
 EntrepreneurController.deleteByID = async (req, res) => {
