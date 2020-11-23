@@ -1,6 +1,8 @@
 const BusinessModel = require('../models/Business');
 const debug = require("debug")("log");
 
+const EntrepreneurService = require('../services/Entrepreneur');
+
 const BusinessService = {};
 
 BusinessService.test = () => {
