@@ -1,6 +1,9 @@
+const { json } = require("express");
 const Business = require("../models/Business");
 const ConsultantModel = require("../models/Consultant");
 const debug = require("debug")("log");
+
+const UserService = require("./User");
 
 const ConsultantService = {};
 
@@ -91,6 +94,19 @@ ConsultantService.findAll = async (page, limit) => {
             skip: page * limit,
             limit: limit,
         }).exec();
+       
+        const newconsultants = await Promise.all (consultants.map( async (consultant) => {
+            const id = consultant.user;
+            const user = await UserService.findOneByID(id);
+            consultant.user = user.content.user;
+            console.log("New consultant w user" + JSON.stringify(user, null, 2));
+            console.log("New consultant " + consultant);
+            return {
+                ...consultant.toObject(), user: user.content.user
+            };
+        }));
+
+        console.log("New consultants " + newconsultants);
         
         if(!consultants){
             serviceResponse = {
@@ -101,8 +117,8 @@ ConsultantService.findAll = async (page, limit) => {
             }
         } else {
             serviceResponse.content = {
-                consultants,
-                count: consultants.length,
+                newconsultants,
+                count: newconsultants.length,
                 page,
                 limit
             }

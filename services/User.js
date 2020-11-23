@@ -239,6 +239,32 @@ UserService.findAll = async () => {
     }
 };
 
+UserService.findOneByID = async (_id) => {
+    let serviceResponse = {
+        success:true,
+        content:{
+            message: "Se ha encontrado el Usuario"
+        }
+    }
+    
+    try{
+        const userFound = await UserModel.findById(_id);
+        if(!userFound) {
+            serviceResponse = {
+                success: false,
+                content: {
+                    error: "No se pudo encontrar el Usuario"
+                }
+            }
+        }
+        serviceResponse.content.user = userFound;
+        return serviceResponse;
+    }catch(error){
+        console.log("An error occurred" + error);
+        throw new Error("Internal Server Error");
+    }
+};
+
 UserService.deleteOneByID = async (_id) => {
     let serviceResponse = {
         success:true,
