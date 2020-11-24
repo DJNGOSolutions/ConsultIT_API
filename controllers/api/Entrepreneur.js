@@ -128,7 +128,7 @@ EntrepreneurController.findAllBusinesses = async(req, res) => {
 };
 
 EntrepreneurController.deleteOneBusiness = async (req, res) => {
-    let { username, business_id } = req.body;
+    let { username, business_id } = req.query;
 
     if(!username){
         return res.status(403).json({
