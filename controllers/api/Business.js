@@ -1,3 +1,4 @@
+const { verifyId } = require('./../../utils/MongoUtils');
 const BusinessService = require("../../services/Business");
 
 const BusinessController = {};
@@ -63,9 +64,9 @@ BusinessController.deleteByID = async (req, res) => {
 };
 
 BusinessController.updateBusiness = async (req, res) => {
-    const { _id } = req.body;
+    const { business_id } = req.body;
     
-    if (!verifyId(_id)) {
+    if (!verifyId(business_id)) {
         return res.status(400).json({
             error: "Error in ID."
         });
@@ -77,7 +78,7 @@ BusinessController.updateBusiness = async (req, res) => {
     }
     
     try{
-        const businessExists = await BusinessService.findOneBusinessByUser(_id); 
+        const businessExists = await BusinessService.findOneBusinessById(business_id); 
         
         if (!businessExists.success){
             return res.status(404).json(businessExists.content);
