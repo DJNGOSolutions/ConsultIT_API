@@ -99,7 +99,7 @@ BusinessService.createNewBusiness_Entrepreneur = async (legalName, comercialName
 
 };
 
-BusinessService.findOneBusinessByUser = async (_id) => {
+BusinessService.findOneBusinessById = async (_id) => {
     let serviceResponse = {
         success: true,
         content: {
@@ -108,7 +108,7 @@ BusinessService.findOneBusinessByUser = async (_id) => {
     }
     
     try{
-        const business = await BusinessModel.findOne({ user: _id });
+        const business = await BusinessModel.findById(_id);
         if (!business) {
             serviceResponse  = {
                 success: false,
@@ -232,7 +232,7 @@ BusinessService.updateConsultantById = async (business, newBusinessData) => {
                 }
             }
         } else {
-            serviceResponse.content = updatedBusiness;
+            serviceResponse.content.updatedBusiness = updatedBusiness;
         }
 
         return serviceResponse;
